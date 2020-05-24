@@ -10,7 +10,7 @@ use App\Kota;
 use App\Kecamatan;
 use App\Pelanggan;
 use App\Order;
-use App\OrderDetail;
+use App\DetailOrder;
 use DB;
 
 class CartController extends Controller
@@ -114,10 +114,10 @@ class CartController extends Controller
 	        'pelanggan_nama' => 'required|string|max:100',
 	        'pelanggan_telephone' => 'required',
 	        'email' => 'required|email',
-	        'pelanggan_address' => 'required|string',
-	        'provinsi_id' => 'required|exists:provinsi,id',
-	        'kota_id' => 'required|exists:kota,id',
-	        'kecamatan_id' => 'required|exists:kecamatan,id'
+	        'pelanggan_alamat' => 'required|string',
+	        'provinsi_id' => 'required|exists:provinsis,id',
+	        'kota_id' => 'required|exists:kotas,id',
+	        'kecamatan_id' => 'required|exists:kecamatans,id'
 	    ]);
 	    DB::beginTransaction();
 	    try {
@@ -133,30 +133,31 @@ class CartController extends Controller
 	        $pelanggan = Pelanggan::create([
 	            'nama' => $request->pelanggan_nama,
 	            'email' => $request->email,
-	            'phone_number' => $request->pelanggan_telephone,
+	            'telephone' => $request->pelanggan_telephone,
 	            'alamat' => $request->pelanggan_alamat,
 	            'kecamatan_id' => $request->kecamatan_id,
 	            'status' => false
 	        ]);
 
 	        $order = Order::create([
-	            'invoice' => Str::random(4) . '-' . time(),
-	            'pelanggan_id' => $pelanggan->id,
-	            'pelanggan_nama' => $pelanggan->name,
-	            'pelanggan_telephone' => $request->pelanggan_phone,
-	            'pelanggan_alamat' => $request->pelanggan_address,
-	            'kecamatan_id' => $request->kecamatan_id,
-	            'subtotal' => $subtotal
+	            'invoice' 				=> 'INV-' . time(),
+	            'pelanggan_id' 			=> $pelanggan->id,
+	            'pelanggan_nama' 		=> $pelanggan->nama,
+	            'pelanggan_telephone' 	=> $request->pelanggan_telephone,
+	            'pelanggan_alamat' 		=> $request->pelanggan_alamat,
+	            'kecamatan_id' 			=> $request->kecamatan_id,
+	            'subtotal' 				=> $subtotal,
+	            'pembayaran' 			=> $request->pembayaran
 	        ]);
 
 	        foreach ($carts as $row) {
 	            $produk = Produk::find($row['produk_id']);
-	            OrderDetail::create([
+	            DetailOrder::create([
 	                'order_id' => $order->id,
 	                'produk_id' => $row['produk_id'],
 	                'harga' => $row['produk_harga'],
-	                'qty' => $row['qty'],
-	                'berat' => $product->berat
+	                'jumlah' => $row['qty'],
+	                'berat' => $produk->berat
 	            ]);
 	        }
 	        
@@ -165,7 +166,7 @@ class CartController extends Controller
 
 	        $carts = [];
 	        //KOSONGKAN DATA KERANJANG DI COOKIE
-	        $cookie = cookie('dw-carts', json_encode($carts), 2880);
+	        $cookie = cookie('ab-carts', json_encode($carts), 2880);
 	        //REDIRECT KE HALAMAN FINISH TRANSAKSI
 	        return redirect(route('front.finish_checkout', $order->invoice))->cookie($cookie);
 	    } catch (\Exception $e) {
@@ -174,5 +175,12 @@ class CartController extends Controller
 	        //DAN KEMBALI KE FORM TRANSAKSI SERTA MENAMPILKAN ERROR
 	        return redirect()->back()->with(['error' => $e->getMessage()]);
 	    }
+	}
+
+	public function checkoutFinish($invoice)
+	{
+    	$order = Order::with(['kecamatan.kota'])->where('invoice', $invoice)->first();
+    	
+    	return view('ecomm.checkoutFinish', compact('order'));
 	}
 }

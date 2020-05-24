@@ -1,0 +1,41 @@
+.order_details .title_confirmation {
+  	text-align: center;
+  	color: #2AC37D;
+}
+
+.mb-80{
+	margin-bottom: 80px; 
+}
+
+.p_120 {
+  	padding-top: 120px;
+  	padding-bottom: 120px; 
+}
+
+.order_d_inner .details_item h4 {
+  	border-bottom: 1px solid #eee;
+  	padding-bottom: 12px;
+  	font-size: 18px;
+  	color: #222222;
+  	padding-left: 18px; 
+}
+
+.order_d_inner .details_item .list {
+  	padding-left: 18px; 
+}
+  	.order_d_inner .details_item .list li {
+    	margin-bottom: 8px; 
+	}
+    	.order_d_inner .details_item .list li:last-child {
+   			margin-bottom: 0px; 
+   		}
+    		.order_d_inner .details_item .list li a {
+		    	font-size: 14px;
+		    	color: #222222;
+		    	font-family: "Roboto", sans-serif; 
+		    }
+      			.order_d_inner .details_item .list li a span {
+        			width: 145px;
+        			display: inline-block;
+        			color: #777777; 
+        		}

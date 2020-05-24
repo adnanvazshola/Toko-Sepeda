@@ -41,7 +41,8 @@ class kategoriController extends Controller
         ]);
         $kategori = Kategori::find($id);
         $kategori->update([
-            'nama' => $request->nama,
+            'nama'      => $request->nama,
+            'slug'      => $request->nama,
             'parent_id' => $request->parent_id
         ]);
       

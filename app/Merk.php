@@ -8,7 +8,7 @@ use App\Produk;
 
 class Merk extends Model
 {
-    protected $fillable = ['nama', 'sales', 'telephone', 'email'];
+    protected $fillable = ['nama', 'slug', 'sales', 'telephone', 'email'];
 
 	public function child()
 	{

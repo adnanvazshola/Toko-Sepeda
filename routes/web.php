@@ -40,3 +40,4 @@ Route::get('/cart', 'CartController@listCart')->name('front.list_cart');
 Route::post('/cart/update', 'CartController@updateCart')->name('front.update_cart');
 Route::get('/checkout', 'CartController@checkout')->name('front.checkout');
 Route::post('/checkout', 'CartController@processCheckout')->name('front.store_checkout');
+Route::get('/checkout/{invoice}', 'CartController@checkoutFinish')->name('front.finish_checkout');

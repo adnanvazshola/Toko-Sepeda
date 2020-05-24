@@ -89,14 +89,35 @@
                     </table>
                   </div>
                   <footer>
+                    <h3>Payment Method</h3>
+                    <div class="form-group cheque">
+                      <div class="ps-radio ps-radio--inline">
+                        <input class="form-control" type="radio" id="rdo01" name="pembayaran" value="BRI | 6919-01-01234-56-0" checked>
+                        <label for="rdo01">Bank Transfer</label>
+                      </div>
+                      <ul class="ps-payment-method">
+                        <li><a href="#"><img src="{{ asset('img/payment/atmBersama.jpg') }}" alt=""></a></li>
+                        <li><a href="#"><img src="{{ asset('img/payment/prima.png') }}" alt=""></a></li>
+                      </ul>
+                    </div>
+                    <div class="form-group paypal">
+                      <div class="ps-radio ps-radio--inline">
+                        <input class="form-control" type="radio" id="rdo02" name="pembayaran" value="Paypal">
+                        <label for="rdo02">Paypal</label>
+                      </div>
+                      <ul class="ps-payment-method">
+                        <li><a href="#"><img src="{{ asset('img/payment/1.png') }}" alt=""></a></li>
+                        <li><a href="#"><img src="{{ asset('img/payment/2.png') }}" alt=""></a></li>
+                        <li><a href="#"><img src="{{ asset('img/payment/3.png') }}" alt=""></a></li>
+                      </ul>
+                    </div>
                     <div class="form-group cheque">
                       <div class="ps-radio">
-                        <h5 style="color: white;">
-                          <div class="row">
-                          Total :
-                          Rp {{ number_format($subtotal) }}
-                          </div>
-                        </h5>
+                        <p>
+                          <h5 style="color: white;">
+                            Total : Rp {{ number_format($subtotal) }}
+                          </h5>
+                        </p>
                       </div>
                     </div>
                     <div class="form-group paypal">

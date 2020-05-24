@@ -17,8 +17,8 @@ class CreatePelanggansTable extends Migration
             $table->id();
             $table->String('nama');
             $table->String('email');
-            $table->String('jenisKelamin');
-            $table->String('tanggalLahir');
+            $table->String('jenisKelamin')->nullable();
+            $table->String('tanggalLahir')->nullable();
             $table->String('telephone');
             $table->String('alamat');
             $table->unsignedBigInteger('kecamatan_id');

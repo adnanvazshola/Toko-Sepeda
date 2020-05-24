@@ -22,6 +22,7 @@ class merkController extends Controller
         	'telephone'	=> 'required|numeric',
         	'email'		=> 'required'
     	]);
+        $request->request->add(['slug' => $request->nama]);
     	Merk::create($request->except('_token'));
 
     	return redirect(route('merk.index'))->with(['success' => 'merk berhasil di tambah']);
@@ -46,6 +47,7 @@ class merkController extends Controller
         $merk = Merk::find($id);
         $merk->update([
             'nama' 		=> $request->nama,
+            'slug'      => $request->nama,
             'sales' 	=> $request->sales,
             'telephone'	=> $request->telephone,
             'email' 	=> $request->email,
