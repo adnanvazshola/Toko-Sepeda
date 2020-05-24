@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
     	$this->call(KotaTableSeeder::class);
     	$this->call(ProvinsiTableSeeder::class);
         $this->call(WarnaTableSeeder::class);
-        $this->call(UserTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
     }
 }
