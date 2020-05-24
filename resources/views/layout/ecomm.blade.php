@@ -214,7 +214,7 @@
       </div>
     </main>
     <!-- JS Library-->
-    @yield('js')
+    
     <script type="text/javascript" src="{{ asset('Skytheme/plugins/jquery/dist/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('Skytheme/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('Skytheme/plugins/jquery-bar-rating/dist/jquery.barrating.min.js') }}"></script>
@@ -241,5 +241,6 @@
     <script type="text/javascript" src="{{ asset('Skytheme/plugins/revolution/js/extensions/revolution.extension.migration.min.js') }}"></script>
       <!-- Custom scripts-->
     <script type="text/javascript" src="{{ asset('Skytheme/js/main.js') }}"></script>
+    @yield('js')
   </body>
 </html>
