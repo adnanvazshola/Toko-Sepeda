@@ -17,13 +17,15 @@ class CreateProduksTable extends Migration
             $table->id();
             $table->String('nama');
             $table->String('slug');
+            $table->unsignedBigInteger('merk_id');
             $table->unsignedBigInteger('kategori_id');
             $table->String('ukuran');
             $table->unsignedBigInteger('warna_id');
             $table->integer('stok');
-            $table->String('desc')->nullable();
+            $table->text('desc')->nullable();
             $table->integer('harga');
             $table->integer('berat');
+            $table->boolean('status')->default(true);
             $table->String('foto');
             $table->timestamps();
         });

@@ -18,7 +18,7 @@ class CreateBeritasTable extends Migration
             $table->String('judul');
             $table->String('slug');
             $table->unsignedBigInteger('user_id');
-            $table->String('isi');
+            $table->longText('isi');
             $table->String('foto');
             $table->timestamps();
         });
