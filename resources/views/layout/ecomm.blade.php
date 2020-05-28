@@ -41,7 +41,11 @@
                   <p>Jalan Nusa Indah No. 13, Depok, Sleman  -  Hotline: 081-238-844-944</p>
                 </div>
                 <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
-                  <div class="header__actions"><a href="#">Login & Regiser</a>
+                  @if (auth()->guard('pelanggan')->check())
+                    <div class="header__actions"><a href="{{ route('pelanggan.logout') }}">Logout</a>
+                  @else
+                    <div class="header__actions"><a href="{{ route('pelanggan.login') }}">Login</a>
+                  @endif
                     <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">IDR<i class="fa fa-angle-down"></i></a>
                       <ul class="dropdown-menu">
                         <li><a href="#"><img src="{{ asset('Skytheme/img/flag/singapore.svg') }}" alt=""> IDR</a></li>

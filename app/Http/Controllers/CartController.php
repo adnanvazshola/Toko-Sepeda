@@ -12,6 +12,8 @@ use App\Pelanggan;
 use App\Order;
 use App\DetailOrder;
 use DB;
+use App\Mail\PelangganRegisterMail;
+use Mail;
 
 class CartController extends Controller
 {
@@ -53,13 +55,10 @@ class CartController extends Controller
 
 	public function listCart()
 	{
-    	//MENGAMBIL DATA DARI COOKIE
     	$carts = $this->getCarts();
-	    //UBAH ARRAY MENJADI COLLECTION, KEMUDIAN GUNAKAN METHOD SUM UNTUK MENGHITUNG SUBTOTAL
     	$subtotal = collect($carts)->sum(function($q) {
-	        return $q['qty'] * $q['produk_harga']; //SUBTOTAL TERDIRI DARI QTY * PRICE
+	        return $q['qty'] * $q['produk_harga'];
     	});
-    	//LOAD VIEW CART.BLADE.PHP DAN PASSING DATA CARTS DAN SUBTOTAL
     	return view('ecomm.cart', compact('carts', 'subtotal'));
 	}
 
@@ -80,44 +79,38 @@ class CartController extends Controller
 
 	public function checkout()
 	{
-	    //QUERY UNTUK MENGAMBIL SEMUA DATA PROPINSI
 	    $provinsi = Provinsi::orderBy('created_at', 'DESC')->get();
-	    $carts = $this->getCarts(); //MENGAMBIL DATA CART
-	    //MENGHITUNG SUBTOTAL DARI KERANJANG BELANJA (CART)
+	    $carts = $this->getCarts();
 	    $subtotal = collect($carts)->sum(function($q) {
 	        return $q['qty'] * $q['produk_harga'];
 	    });
-	    //ME-LOAD VIEW CHECKOUT.BLADE.PHP DAN PASSING DATA PROVINCES, CARTS DAN SUBTOTAL
+
 	    return view('ecomm.checkout', compact('provinsi', 'carts', 'subtotal'));
 	}
 
 	public function getKota()
 	{
-	    //QUERY UNTUK MENGAMBIL DATA KOTA / KABUPATEN BERDASARKAN provinsi_id
 	    $kota = Kota::where('provinsi_id', request()->provinsi_id)->get();
-	    //KEMBALIKAN DATANYA DALAM BENTUK JSON
+
 	    return response()->json(['status' => 'success', 'data' => $kota]);
 	}
 
 	public function getKecamatan()
 	{
-	    //QUERY UNTUK MENGAMBIL DATA KECAMATAN BERDASARKAN kota_id
 	    $kecamatan = Kecamatan::where('kota_id', request()->kota_id)->get();
-	    //KEMUDIAN KEMBALIKAN DATANYA DALAM BENTUK JSON
 	    return response()->json(['status' => 'success', 'data' => $kecamatan]);
 	}
 
 	public function processCheckout(Request $request)
 	{
-	    //VALIDASI DATANYA
 	    $this->validate($request, [
-	        'pelanggan_nama' => 'required|string|max:100',
-	        'pelanggan_telephone' => 'required',
-	        'email' => 'required|email',
-	        'pelanggan_alamat' => 'required|string',
-	        'provinsi_id' => 'required|exists:provinsis,id',
-	        'kota_id' => 'required|exists:kotas,id',
-	        'kecamatan_id' => 'required|exists:kecamatans,id'
+	        'pelanggan_nama'		=> 'required|string|max:100',
+	        'pelanggan_telephone' 	=> 'required',
+	        'email' 				=> 'required|email',
+	        'pelanggan_alamat' 		=> 'required|string',
+	        'provinsi_id' 			=> 'required|exists:provinsis,id',
+	        'kota_id' 				=> 'required|exists:kotas,id',
+	        'kecamatan_id'			=> 'required|exists:kecamatans,id'
 	    ]);
 	    DB::beginTransaction();
 	    try {
@@ -130,13 +123,16 @@ class CartController extends Controller
 	            return $q['qty'] * $q['produk_harga'];
 	        });
 
+	        $password = Str::random(8);
 	        $pelanggan = Pelanggan::create([
-	            'nama' => $request->pelanggan_nama,
-	            'email' => $request->email,
-	            'telephone' => $request->pelanggan_telephone,
-	            'alamat' => $request->pelanggan_alamat,
-	            'kecamatan_id' => $request->kecamatan_id,
-	            'status' => false
+	            'nama' 			=> $request->pelanggan_nama,
+	            'email' 		=> $request->email,
+	            'password'		=> $password,
+	            'telephone' 	=> $request->pelanggan_telephone,
+	            'alamat' 		=> $request->pelanggan_alamat,
+	            'kecamatan_id' 	=> $request->kecamatan_id,
+	            'activate_token'=> Str::random(30),
+	            'status' 		=> false
 	        ]);
 
 	        $order = Order::create([
@@ -153,26 +149,24 @@ class CartController extends Controller
 	        foreach ($carts as $row) {
 	            $produk = Produk::find($row['produk_id']);
 	            DetailOrder::create([
-	                'order_id' => $order->id,
-	                'produk_id' => $row['produk_id'],
-	                'harga' => $row['produk_harga'],
-	                'jumlah' => $row['qty'],
-	                'berat' => $produk->berat
+	                'order_id' 	=> $order->id,
+	                'produk_id'	=> $row['produk_id'],
+	                'harga' 	=> $row['produk_harga'],
+	                'ukuran'	=> $row['ukuran'],
+	                'jumlah' 	=> $row['qty'],
+	                'berat' 	=> $produk->berat
 	            ]);
 	        }
-	        
-	        //TIDAK TERJADI ERROR, MAKA COMMIT DATANYA UNTUK MENINFORMASIKAN BAHWA DATA SUDAH FIX UNTUK DISIMPAN
+
 	        DB::commit();
 
 	        $carts = [];
-	        //KOSONGKAN DATA KERANJANG DI COOKIE
 	        $cookie = cookie('ab-carts', json_encode($carts), 2880);
-	        //REDIRECT KE HALAMAN FINISH TRANSAKSI
+	        Mail::to($request->email)->send(new PelangganRegisterMail($pelanggan, $password));
+
 	        return redirect(route('front.finish_checkout', $order->invoice))->cookie($cookie);
 	    } catch (\Exception $e) {
-	        //JIKA TERJADI ERROR, MAKA ROLLBACK DATANYA
 	        DB::rollback();
-	        //DAN KEMBALI KE FORM TRANSAKSI SERTA MENAMPILKAN ERROR
 	        return redirect()->back()->with(['error' => $e->getMessage()]);
 	    }
 	}

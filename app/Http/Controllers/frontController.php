@@ -7,6 +7,7 @@ use App\Produk;
 use App\Berita;
 use App\Kategori;
 use App\Merk;
+use App\Pelanggan;
 
 class frontController extends Controller
 {
@@ -49,5 +50,19 @@ class frontController extends Controller
         $produk = Produk::with(['kategori','merk','warna'])->where('slug', $slug)->first();
 
         return view('ecomm.detailProduk', compact('produk'));
+    }
+
+    public function verifikasiPelanggan($token)
+    {
+        $pelanggan = Pelanggan::where('activate_token', $token)->first();
+        if ($pelanggan) {
+            $pelanggan->update([
+                'activate_token' => null,
+                'status' => 1
+            ]);
+            return redirect(route('pelanggan.login'))->with(['success' => 'Verifikasi Berhasil, Silahkan Login']);
+        }
+    
+        return redirect(route('pelanggan.login'))->with(['error' => 'Invalid Verifikasi Token']);
     }
 }

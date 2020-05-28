@@ -30,6 +30,20 @@ Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
 	Route::resource('berita', 'beritaController')->except(['show']);
 });
 
+Route::group(['prefix' => 'member', 'namespace' => 'ecomm'], function() {
+	Route::get('login', 'LoginController@loginForm')->name('pelanggan.login');
+});
+
+Route::group(['prefix' => 'member'], function() {
+    Route::get('verifikasi/{token}', 'FrontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
+});
+
+
+Route::group(['middleware' => 'pelanggan'], function() {
+    Route::get('dashboard', 'LoginController@dashboard')->name('pelanggan.dashboard');
+    Route::get('logout', 'LoginController@logout')->name('pelanggan.logout');
+});
+
 Route::get('/', 'frontController@index')->name('front.index');
 Route::get('/produk', 'frontController@produk')->name('front.produk');
 Route::get('/kategori/{slug}', 'FrontController@kategoriProduk')->name('front.kategori');

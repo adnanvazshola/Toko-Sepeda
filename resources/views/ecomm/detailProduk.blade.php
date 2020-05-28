@@ -47,8 +47,8 @@
                     <div class="ps-product__block ps-product__size">
                       <input type="hidden" name="produk_id" value="{{ $produk->id }}" class="form-control">
                       <h4>Pilih Ukuran<a href="#">Size chart</a></h4>
-                      <select class="ps-select selectpicker" name="ukuran">
-                        <option value="0">Select Size</option>
+                      <select class="ps-select selectpicker" name="ukuran" required="silahkan pilih ukuran">
+                        <option disabled>Select Size</option>
                         <option value="XS">XS</option>
                         <option value="S">S</option>
                         <option value="M">M</option>

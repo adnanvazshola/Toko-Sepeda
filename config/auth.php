@@ -41,6 +41,11 @@ return [
             'provider' => 'users',
         ],
 
+        'pelanggan' => [
+            'driver' => 'session',
+            'provider' => 'pelanggans',
+        ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -69,6 +74,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'pelanggans' => [
+            'driver' => 'eloquent',
+            'model' => App\Pelanggan::class,
         ],
 
         // 'users' => [
