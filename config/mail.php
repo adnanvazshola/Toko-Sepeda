@@ -83,8 +83,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'AllBike@store.com'),
-        'name' => env('MAIL_FROM_NAME', 'All Bike Store'),
+        'address' => env('MAIL_FROM_ADDRESS', 'alvi.4120@students.amikom.ac.id'),
+        'name' => env('MAIL_FROM_NAME', 'AllBike Official'),
     ],
 
     /*

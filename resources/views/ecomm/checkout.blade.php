@@ -12,6 +12,9 @@
               <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
                 <div class="ps-checkout__billing">
                   <h3>Billing Detail</h3>
+                  @if (session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                  @endif
                   <div class="form-group form-group--inline">
                     <label>Nama</label>
                     <input type="text" class="form-control" id="first" name="pelanggan_nama" required>
