@@ -80,12 +80,12 @@ return [
     | the same address. Here, you may specify a name and address that is
     | used globally for all e-mails that are sent by your application.
     |
-    */
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'alvi.4120@students.amikom.ac.id'),
         'name' => env('MAIL_FROM_NAME', 'AllBike Official'),
     ],
+    */
 
     /*
     |--------------------------------------------------------------------------

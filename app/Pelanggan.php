@@ -15,4 +15,8 @@ class Pelanggan extends Authenticatable
 	{
     	$this->attributes['password'] = bcrypt($value);
 	}
+	public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

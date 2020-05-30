@@ -12,4 +12,8 @@ class Order extends Model
     {
         return $this->belongsTo(Kecamatan::class);
     }
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class);
+    }
 }
