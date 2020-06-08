@@ -50,7 +50,7 @@ class CartController extends Controller
 	    }
 	    $cookie = cookie('ab-carts', json_encode($carts), 2880);
 	    
-	    return redirect()->back()->cookie($cookie);
+	    return redirect()->back()->cookie($cookie)->with(['success' => 'barang berhasil di tambah']);
 	}
 
 	public function listCart()
@@ -174,7 +174,6 @@ class CartController extends Controller
 	public function checkoutFinish($invoice)
 	{
     	$order = Order::with(['kecamatan.kota'])->where('invoice', $invoice)->first();
-    	//$pelanggan = Pelanggan::with(['order'])->where('id', $pelanggan_id)->first();
     	
     	return view('ecomm.checkoutFinish', compact('order'));
 	}

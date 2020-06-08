@@ -1,6 +1,6 @@
 @extends('layout.ecomm')
 @section('title')
-	<title>Keranjang Belanja - Dw Ecommerce</title>
+	<title>Pemesanan Sukses</title>
 @endsection
 
 @section('css')
@@ -8,12 +8,11 @@
 @endsection
 
 @section('content')
-	<section class="order_details p_120">
+	<section class="order_details p_50">
 		<div class="container">
-			<div class="title_confirmation">
-				<h3>Terima kasih, pesanan anda telah kami terima.</h3><br>
-				<h5>Harap Konfirmasi pembayaran anda pada dashboard</h5>
-			</div>
+			<h3 class="title_confirmation">Terima kasih, pesanan anda telah kami terima.</h3>
+			<h6 class="title_confirmation" style="color: grey;">Silahkan cek email anda dan lakukan konfirmasi bukti transfer di dashboard anda</h6>
+			<br><br><br>
 			<div class="row order_d_inner">
 				<div class="col-lg-4">
 					<div class="details_item">
@@ -21,19 +20,15 @@
 						<ul class="list">
 							<li>
 								<a href="#">
-                  <span>Invoice</span> : {{ $order->invoice }}</a>
+                  				<span>Invoice</span> : {{ $order->invoice }}</a>
 							</li>
 							<li>
 								<a href="#">
-                  <span>Tanggal</span> : {{ $order->created_at }}</a>
+                  				<span>Tanggal</span> : {{ $order->created_at->format('d-m-Y') }}</a>
 							</li>
 							<li>
 								<a href="#">
-                  <span>Total</span> : Rp {{ number_format($order->subtotal) }}</a>
-							</li>
-							<li>
-								<a href="#">
-                  <span>Metode pembayaran</span> : {{ $order->pembayaran }}</a>
+                  				<span>Total</span> : Rp {{ number_format($order->subtotal) }}</a>
 							</li>
 						</ul>
 					</div>
@@ -44,38 +39,34 @@
 						<ul class="list">
 							<li>
 								<a href="#">
-                  <span>Alamat</span> : {{ $order->pelanggan_alamat }}</a>
+                  				<span>Alamat</span> : {{ $order->pelanggan_alamat }}</a>
 							</li>
 							<li>
 								<a href="#">
-                  <span>Kecamatan</span> : {{ $order->kecamatan->nama }}</a>
+                  				<span>Kota</span> : {{ $order->kecamatan->kota->nama }}</a>
 							</li>
 							<li>
 								<a href="#">
-                  <span>Kota</span> : {{ $order->kecamatan->kota->nama }}</a>
-							</li>
-							<li>
-								<a href="#">
-									<span>Country</span> : Indonesia</a>
+								<span>Negara</span> : Indonesia</a>
 							</li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="details_item">
-						<h4>Informasi Akun</h4>
+						<h4>Informasi Pembayaran</h4>
 						<ul class="list">
 							<li>
 								<a href="#">
-                  <span>Email</span> : </a>
+                  				<span>Total</span> : Rp {{ number_format($order->subtotal) }}</a>
 							</li>
 							<li>
 								<a href="#">
-                  <span>Username</span> : {{ $order->pelanggan_nama }}</a>
+                  				<span>Biaya pengiriman</span> : Rp. 0</a>
 							</li>
 							<li>
 								<a href="#">
-                  <span>Password</span> :</a>
+                  				<span>Nomer Rekening</span> : {{ $order->pembayaran }}</a>
 							</li>
 						</ul>
 					</div>

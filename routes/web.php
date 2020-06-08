@@ -29,19 +29,26 @@ Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
 	Route::post('/produk/bulk', 'ProdukController@produkUpload')->name('produk.saveMassal');
 	Route::resource('berita', 'beritaController')->except(['show']);
 });
-
+/*
 Route::group(['prefix' => 'member', 'namespace' => 'ecomm'], function() {
-	Route::get('login', 'LoginController@loginForm')->name('pelanggan.login');
+	Route::post('login', 'LoginController@loginForm')->name('pelanggan.login');
 });
+*/
 
+/*
+Route::group(['prefix' => 'member', 'namespace' => 'ecomm'], function() {
+	Route::post('login', 'loginController@login')->name('pelanggan.login');
+    Route::get('verifikasi/{token}', 'FrontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
+});
+*/
 Route::group(['prefix' => 'member'], function() {
+	Route::post('login', 'ecomm/loginController@login')->name('pelanggan.login');
     Route::get('verifikasi/{token}', 'FrontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
 });
 
-
 Route::group(['middleware' => 'pelanggan'], function() {
-    Route::get('dashboard', 'LoginController@dashboard')->name('pelanggan.dashboard');
-    Route::get('logout', 'LoginController@logout')->name('pelanggan.logout');
+    Route::get('dashboard', 'ecomm/loginController@dashboard')->name('pelanggan.dashboard');
+    Route::get('logout', 'ecomm/loginController@logout')->name('pelanggan.logout');
 });
 
 Route::get('/', 'frontController@index')->name('front.index');

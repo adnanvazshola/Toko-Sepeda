@@ -14,8 +14,8 @@
   <div class="card">
         <div class="card-body login-card-body">
         <p class="login-box-msg">Sign in to start your session</p>
-
-        <form action="{{ route('pelanggan.login') }}" method="post">
+        
+        <form action="{{ route('pelanggan.login') }}" method="post" id="contactForm" novalidate="novalidate">
             @csrf
             <div class="input-group mb-3">
                 <input  class="form-control" 
