@@ -29,27 +29,27 @@ Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
 	Route::post('/produk/bulk', 'ProdukController@produkUpload')->name('produk.saveMassal');
 	Route::resource('berita', 'beritaController')->except(['show']);
 });
-/*
-Route::group(['prefix' => 'member', 'namespace' => 'ecomm'], function() {
-	Route::post('login', 'LoginController@loginForm')->name('pelanggan.login');
-});
-*/
 
 /*
 Route::group(['prefix' => 'member', 'namespace' => 'ecomm'], function() {
-	Route::post('login', 'loginController@login')->name('pelanggan.login');
-    Route::get('verifikasi/{token}', 'FrontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
+});
+
+Route::group(['prefix' => 'member', 'namespace' => 'ecomm'], function() {
+	Route::get('verifikasi/{token}', 'FrontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
+	Route::post('login', 'loginController@loginForm')->name('pelanggan.login');
+	Route::post('login', 'loginController@login')->name('pelanggan.postLogin');
 });
 */
 Route::group(['prefix' => 'member'], function() {
-	Route::post('login', 'ecomm/loginController@login')->name('pelanggan.login');
     Route::get('verifikasi/{token}', 'FrontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
+	Route::get('login', 'loginController@loginForm')->name('pelanggan.login');
+	Route::post('login', 'loginController@login')->name('pelanggan.postLogin');
+	Route::group(['middleware' => 'pelanggan'], function() {
+	    Route::get('dashboard', 'loginController@dashboard')->name('pelanggan.dashboard');
+	    Route::get('logout', 'loginController@logout')->name('pelanggan.logout');
+	});
 });
 
-Route::group(['middleware' => 'pelanggan'], function() {
-    Route::get('dashboard', 'ecomm/loginController@dashboard')->name('pelanggan.dashboard');
-    Route::get('logout', 'ecomm/loginController@logout')->name('pelanggan.logout');
-});
 
 Route::get('/', 'frontController@index')->name('front.index');
 Route::get('/produk', 'frontController@produk')->name('front.produk');

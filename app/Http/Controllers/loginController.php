@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\ecomm;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Order;
 
 class loginController extends Controller
 {
@@ -32,6 +33,15 @@ class loginController extends Controller
 
 	public function dashboard()
 	{
+		/*
+		$orders = Order::selectRaw('
+			COALESCE(sum(CASE WHEN status = 0 THEN subtotal END), 0) as Ditunda, 
+        	COALESCE(count(CASE WHEN status = 3 THEN subtotal END), 0) as Dikirim,
+        	COALESCE(count(CASE WHEN status = 4 THEN subtotal END), 0) as Selesai')
+        	->where('pelanggan_id', auth()->guard('pelanggan')->user()->id)->get();
+
+    	return view('ecomm.dashboard', compact('orders'));
+    	*/
     	return view('ecomm.dashboard');
 	}
 

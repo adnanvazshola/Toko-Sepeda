@@ -1,8 +1,5 @@
 @extends('layout.ecomm')
 @section('title')
-	<!--   
-    <title>{{ Auth::pelanggan()->nama }}</title>
-	-->
 	<title>Dashboard</title>
 @endsection
 
