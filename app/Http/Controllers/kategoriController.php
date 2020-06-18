@@ -4,12 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Kategori;
+use DataTables;
 
 class kategoriController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-    	$kategori = Kategori::with(['parent'])->orderBy('nama', 'DESC')->paginate(10);
+        if ($request->ajax()) {
+            $data = Kategori::latest()->get();
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+   
+                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct">Edit</a>';
+   
+                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct">Delete</a>';
+    
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+
+        $kategori = Kategori::with(['parent'])->orderBy('nama', 'DESC')->paginate(10);
         $parent = Kategori::getParent()->orderBy('nama', 'ASC')->get();
       
         return view('kategori.index', compact('kategori', 'parent'));
@@ -21,8 +38,9 @@ class kategoriController extends Controller
         	'nama' => 'required|string|max:50|unique:kategoris'
     	]);
     	$request->request->add(['slug' => $request->nama]);
-    	Kategori::create($request->except('_token'));
-
+        Kategori::create($request->except('_token'));
+        
+        
     	return redirect(route('kategori.index'))->with(['success' => 'Kategori berhasil di tambah']);
 	}
 

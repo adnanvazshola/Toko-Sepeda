@@ -12,34 +12,7 @@
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Kategori Baru</h4>
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('kategori.store') }}" method="post">
-                    @csrf
-                        <div class="row">
-                            <div class="form-group col-md-4">
-                                <input type="text" name="nama" class="form-control" placeholder="Masukan nama kategori" required>
-                                <p class="text-danger">{{ $errors->first('nama') }}</p>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <select name="parent_id" class="form-control">
-                                    <option value="">Pilih kategori turunan</option>
-                                    @foreach ($parent as $row)
-                                        <option value="{{ $row->id }}">{{ $row->nama }}</option>
-                                    @endforeach
-                                </select>
-                                <p class="text-danger">{{ $errors->first('nama') }}</p>
-                            </div>
-                            <div class="form-group col-md-auto">
-                                <button class="btn btn-primary">Tambah</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">List Kategori</h4>
@@ -51,8 +24,9 @@
                 @if (session('error'))
                     <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif
+                    <a class="btn btn-success my-4" href="javascript:void(0)" id="createNewProduct"> Tambah Kategori</a>
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered">
+                        <table id="anjing" class="table table-hover table-bordered data-table">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -63,26 +37,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($kategori as $c)
-                                    <tr>
-                                        <td></td>
-                                        <td><strong>{{ $c->nama }}</strong></td>
-                                        <td>{{ $c->parent ? $c->parent->nama:'-' }}</td>
-                                        <td>{{ $c->created_at->format('d-m-Y') }}</td>
-                                        <td>
-                                            <form action="{{ route('kategori.destroy', $c->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                                <a href="{{ route('kategori.edit', $c->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                <button class="btn btn-danger btn-sm">Hapus</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center">Tidak ada data</td>
-                                    </tr>
-                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -93,3 +47,5 @@
     </div>
 </main>
 @endsection
+
+
