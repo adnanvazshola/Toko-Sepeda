@@ -52,7 +52,7 @@ class merkController extends Controller
         Merk::updateOrCreate(['id' => $request->merk_id],
                 [
                     'nama'      => $request->nama, 
-                    'slug'      => $request->nama,
+                    'slug'      => $request->slug,
                     'sales'     => $request->sales,
                     'telephone' => $request->telephone,
                     'email'     => $request->email,
