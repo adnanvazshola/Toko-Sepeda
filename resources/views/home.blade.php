@@ -27,8 +27,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>150</h3>
-                        <p>New Orders</p>
+                        <h3>{{ $jumlahproduk }}</h3>
+                        <p>Jumlah Produk</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-shopping-cart"></i>
