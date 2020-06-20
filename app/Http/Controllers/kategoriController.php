@@ -23,14 +23,13 @@ class kategoriController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editMerk">Edit</a>';
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteMerk">Delete</a>';
+                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editKategori">Edit</a>';
+                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteKategori">Delete</a>';
                             return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
-
         $parent = Kategori::getParent()->orderBy('nama', 'ASC')->get();
         return view('kategori.index', compact('parent'));
     }
@@ -39,6 +38,7 @@ class kategoriController extends Controller
     {
         $this->validate($request, [
             'nama' => 'required|string|max:50|unique:kategoris'
+            
         ]);
         $request->request->add(['slug' => $request->nama]);
         Kategori::create($request->except('_token'));
@@ -71,11 +71,9 @@ class kategoriController extends Controller
     
     public function destroy($id)
     {
-        $kategori = Kategori::withCount(['child', 'produk'])->find($id);
-        if ($kategori->child_count == 0 && $kategori->produk_count == 0) {
-            $kategori->delete();
-            return redirect(route('kategori.index'))->with(['success' => 'Kategori telah di hapus']);
-        }
-        return redirect(route('kategori.index'))->with(['error' => 'Kategori Ini Memiliki Anak Kategori']);
+        Kategori::find($id)->delete();
+     
+        return response()->json(['success'=>'Kategori dihapus.']);
     }
+    
 }

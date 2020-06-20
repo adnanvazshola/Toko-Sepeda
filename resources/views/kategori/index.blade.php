@@ -16,7 +16,7 @@
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
-            <div class="card" id="ajaxModel">
+            <div class="card">
                 <div class="card-header">
                     <h4 class="card-title" id="cardHeading">Kategori Baru</h4>
                 </div>
@@ -33,7 +33,7 @@
                                 <select name="parent_id" id="parent_id" class="form-control">
                                     <option value="">Pilih kategori turunan</option>
                                     @foreach ($parent as $row)
-                                        <option value="{{ $row->id }}">{{ $row->nama }}</option>
+                                        <option value="{{ $row->nama }}">{{ $row->nama }}</option>
                                     @endforeach
                                 </select>
                                 <p class="text-danger">{{ $errors->first('nama') }}</p>
@@ -115,24 +115,12 @@
                 });
             });
 
-            $('body').on('click', '.editKategori', function () {
-                var id = $(this).data('id');
-                $.get("{{ route('kategori.index') }}" +'/' + id +'/edit', function (data) {
-                    $('#cardHeading').html("Edit Kategori");
-                    $('#saveBtn').val("edit-user");
-                    $('#kategori_id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#parent_id').val(data.parent_id);
-                })
-
-            });
-
             $('body').on('click', '.deleteKategori', function () {
-                var product_id = $(this).data("id");
+                var kategori_id = $(this).data("id");
                 confirm("Are You sure want to delete !");
                 $.ajax({
                     type: "DELETE",
-                    url: "{{ route('kategori.store') }}"+'/'+product_id,
+                    url: "{{ route('kategori.store') }}"+'/'+kategori_id,
                     success: function (data) {
                         table.draw();
                     },
