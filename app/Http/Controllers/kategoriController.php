@@ -30,8 +30,9 @@ class kategoriController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-
         $parent = Kategori::getParent()->orderBy('nama', 'ASC')->get();
+    
+
         return view('kategori.index', compact('parent'));
     }
 
@@ -42,6 +43,8 @@ class kategoriController extends Controller
         ]);
         $request->request->add(['slug' => $request->nama]);
         Kategori::create($request->except('_token'));
+
+        
 
         return redirect(route('kategori.index'))->with(['success' => 'Kategori berhasil di tambah']);
     }

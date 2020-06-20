@@ -33,7 +33,7 @@
                                 <select name="parent_id" id="parent_id" class="form-control">
                                     <option value="">Pilih kategori turunan</option>
                                     @foreach ($parent as $row)
-                                        <option value="{{ $row->id }}">{{ $row->nama }}</option>
+                                        <option value="{{ $row->nama }}">{{ $row->nama }}</option>
                                     @endforeach
                                 </select>
                                 <p class="text-danger">{{ $errors->first('nama') }}</p>
