@@ -16,16 +16,16 @@
     </ol>
     <div class="container-fluid container">
         <div class="animated fadeIn">
-            <a class="btn btn-success" href="javascript:void(0)" id="createNewMerk"> Create New Merk</a>
-            <table class="table table-bordered data-table" id="merkTable">
+            <a class="btn btn-success mb-3" href="javascript:void(0)" id="createNewMerk">Tambah Merk</a>
+            <table class="table table-hover data-table" id="merkTable">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Merk</th>
-                        <th>Sales</th>
-                        <th>Telephone</th>
-                        <th>email</th>
-                        <th width="280px">Action</th>
+                        <th width="5%">No</th>
+                        <th width="20%">Merk</th>
+                        <th width="20%">Penanggung Jawab</th>
+                        <th width="15%">Telephone</th>
+                        <th width="20%">E-mail</th>
+                        <th width="15%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,30 +41,34 @@
                     <h4 class="modal-title" id="modelHeading"></h4>
                 </div>
                 <div class="modal-body">
+                    <div class="alert-danger print-error-msg text-danger" style="display:none; background: transparent;">
+                        <ul></ul>
+                    </div>
                     <form id="merkForm" name="merkForm" class="form-horizontal">
+                    {{ csrf_field() }}
                         <input type="hidden" name="merk_id" id="merk_id">
                         <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Nama Merk</label>
+                            <label for="name" class=" control-label">Nama Merk</label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan nama merk" value="" maxlength="100" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Nama Sales</label>
+                            <label for="name" class=" control-label">Nama Sales</label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" id="sales" name="sales" placeholder="Masukan nama sales" value="" maxlength="100" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Telephone</label>
+                            <label for="name" class=" control-label">Telephone</label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Masukan nomor telephone" value="" maxlength="13" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">E-mail</label>
+                            <label for="name" class=" control-label">E-mail</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Masukan email" value="" maxlength="100" required>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Masukan email" value="" maxlength="100" required>
                             </div>
                         </div>
                         <div class="col-sm-offset-2 col-sm-10">
@@ -92,24 +96,18 @@
             });
 
             var table = $('#merkTable').DataTable({
-              processing: true,
-              serverSide: true,
-              ajax: "{{ route('merk.index') }}",
-              data : { 
-                "id"            : $("#id").val(), 
-                "nama"          : $("#nama").val(), 
-                "sales"         : $("#sales").val(), 
-                "telephone"     : $("#telephone").val(),
-                "email"         : $("#email").val()} ,                
-              columns: [
-                  {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                  {data: 'nama', name: 'nama'},
-                  {data: 'sales', name: 'sales'},
-                  {data: 'telephone', name: 'telephone'},
-                  {data: 'email', name: 'email'},
-                  {data: 'action', name: 'action', orderable: false, searchable: false},
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('merk.index') }}",            
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'nama', name: 'nama'},
+                    {data: 'sales', name: 'sales'},
+                    {data: 'telephone', name: 'telephone'},
+                    {data: 'email', name: 'email'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
-          });   
+            });   
 
 
             $('#createNewMerk').click(function () {
@@ -136,22 +134,29 @@
             
             $('#saveBtn').click(function (e) {
                 e.preventDefault();
+
+                var _token      = $("input[name='_token']").val();
+                var nama        = $("input[name='nama']").val();
+                var sales       = $("input[name='sales']").val();
+                var telephone   = $("input[name='telephone']").val();
+                var email       = $("input[name='email']").val();
+
                 $(this).html('Sending..');
                 $.ajax({
-                  data: $('#merkForm').serialize(),
-                  url: "{{ route('merk.store') }}",
-                  type: "POST",
-                  dataType: 'json',
-                  success: function (data) {
-                      $('#merkForm').trigger("reset");
-                      $('#ajaxModel').modal('hide');
-                      table.draw();
-                  },
-                  error: function (data) {
-                      console.log('Error:', data);
-                      $('#saveBtn').html('Save Changes');
-                  }
-              });
+                    data: $('#merkForm').serialize(),
+                    url: "{{ route('merk.store') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#productForm').trigger("reset");
+                        $('#ajaxModel').modal('hide');
+                        table.draw();
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                        $('#saveBtn').html('Save Changes');
+                    }
+                });
             });
 
             $('body').on('click', '.deleteMerk', function () {
@@ -170,5 +175,12 @@
             });
         }); 
         
+        function printErrorMsg (msg) {
+            $(".print-error-msg").find("ul").html('');
+            $(".print-error-msg").css('display','block');
+            $.each( msg, function( key, value ) {
+                $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+            });
+        }
     </script>
 @endsection

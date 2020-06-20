@@ -9,40 +9,42 @@ use DataTables;
 class kategoriController extends Controller
 {
     public function index(Request $request)
+/*    {
+        $kategori = Kategori::with(['parent'])->orderBy('nama', 'DESC')->paginate(10);
+        $parent = Kategori::getParent()->orderBy('nama', 'ASC')->get();
+      
+        return view('kategori.index', compact('kategori', 'parent'));
+    } */
     {
         if ($request->ajax()) {
-            $data = Kategori::latest()->get();
+
+            //$kategori = Kategori::with(['parent'])->orderBy('nama', 'DESC')->get();
+            $data = Kategori::with(['parent'])->orderBy('nama')->orderBy("nama")->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-   
-                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct">Edit</a>';
-   
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct">Delete</a>';
-    
+                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editMerk">Edit</a>';
+                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteMerk">Delete</a>';
                             return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
 
-        $kategori = Kategori::with(['parent'])->orderBy('nama', 'DESC')->paginate(10);
         $parent = Kategori::getParent()->orderBy('nama', 'ASC')->get();
-      
-        return view('kategori.index', compact('kategori', 'parent'));
+        return view('kategori.index', compact('parent'));
     }
 
     public function store(Request $request)
-	{
-    	$this->validate($request, [
-        	'nama' => 'required|string|max:50|unique:kategoris'
-    	]);
-    	$request->request->add(['slug' => $request->nama]);
+    {
+        $this->validate($request, [
+            'nama' => 'required|string|max:50|unique:kategoris'
+        ]);
+        $request->request->add(['slug' => $request->nama]);
         Kategori::create($request->except('_token'));
-        
-        
-    	return redirect(route('kategori.index'))->with(['success' => 'Kategori berhasil di tambah']);
-	}
+
+        return redirect(route('kategori.index'))->with(['success' => 'Kategori berhasil di tambah']);
+    }
 
     public function edit($id)
     {

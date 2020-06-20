@@ -1,24 +1,26 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers; 
 
 use Illuminate\Http\Request;
 use App\Merk;
 use DataTables;
+use Validator;
 
 class merkController extends Controller
 {
     public function index(Request $request)
     /*
     {
-
+    	$merks = Merk::orderBy('nama')->paginate(5);
+        return view('merk.index', compact('merks'));
     }
     */
 
     {
         if ($request->ajax()) {
 
-            $data = Merk::latest()->get();
+            $data = Merk::orderBy("nama")->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
@@ -29,9 +31,7 @@ class merkController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        //return view('merk.index');
-    	$merks = Merk::orderBy('nama')->paginate(5);
-        return view('merk.index', compact('merks'));
+        return view('merk.index');
     }
 
     public function store(Request $request)
@@ -48,16 +48,26 @@ class merkController extends Controller
 
     	return redirect(route('merk.index'))->with(['success' => 'merk berhasil di tambah']);
         */
+        $validator = Validator::make($request->all(), [
+            'nama'      => 'required|string|max:50',
+            'sales'     => 'required|string|max:50',
+            'telephone' => 'required|numeric',
+            'email'     => 'required|email',
+        ]);
 
-        Merk::updateOrCreate(['id' => $request->merk_id],
-                [
-                    'nama'      => $request->nama, 
-                    'slug'      => $request->slug,
-                    'sales'     => $request->sales,
-                    'telephone' => $request->telephone,
-                    'email'     => $request->email,
-                ]);        
-        return response()->json(['success'=>'Merk tersimpan.']);
+        if ($validator->passes()) {
+            Merk::updateOrCreate(['id' => $request->merk_id],
+                    [
+                        'nama'      => $request->nama, 
+                        'slug'      => strtolower($request->nama),
+                        'sales'     => $request->sales,
+                        'telephone' => $request->telephone,
+                        'email'     => $request->email,
+                    ]);        
+            return response()->json(['success'=>'Merk tersimpan.']);
+        }
+
+        return response()->json(['error'=>$validator->errors()->all()]);
 	}
 
     public function edit($id)
