@@ -52,20 +52,20 @@
               @else
                   <div class="header__actions"><a href="{{ route('pelanggan.login') }}">Login</a>
               @endif
-                    <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">IDR<i class="fa fa-angle-down"></i></a>
+                    {{-- <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">IDR<i class="fa fa-angle-down"></i></a>
                       <ul class="dropdown-menu">
                         <li><a href="#"><img src="{{ asset('Skytheme/img/flag/singapore.svg') }}" alt=""> IDR</a></li>
                         <li><a href="#"><img src="{{ asset('Skytheme/img/flag/usa.svg') }}" alt=""> USD</a></li>
                         <li><a href="#"><img src="{{ asset('Skytheme/img/flag/japan.svg') }}" alt=""> JPN</a></li>
                       </ul>
-                    </div>
-                    <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language<i class="fa fa-angle-down"></i></a>
+                    </div> --}}
+                    {{-- <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language<i class="fa fa-angle-down"></i></a>
                       <ul class="dropdown-menu">
                         <li><a href="#">Indonesia</a></li>
                         <li><a href="#">English</a></li>
                         <li><a href="#">Japanese</a></li>
                       </ul>
-                    </div>
+                    </div> --}}
                   </div>
                 </div>
           </div>
@@ -80,7 +80,7 @@
             <ul class="main-menu menu">
               <li class="menu-item"><a href="{{ route('front.index') }}">Home</a></li>
               <li class="menu-item"><a href="{{ route('front.produk') }}">Produk</a></li>
-              <li class="menu-item menu-item-has-children dropdown"><a href="#">Kategori</a>
+              {{-- <li class="menu-item menu-item-has-children dropdown"><a href="#">Kategori</a>
                 <ul class="sub-menu">
                   <li class="menu-item menu-item-has-children dropdown"><a href="blog-grid.html">Sepeda</a>
                     <ul class="sub-menu">
@@ -90,13 +90,13 @@
                   </li>
                   <li class="menu-item"><a href="blog-list.html">Jersey</a></li>
                 </ul>
-              </li>
-              <li class="menu-item menu-item-has-children dropdown"><a href="#">Merk</a>
+              </li> --}}
+              {{-- <li class="menu-item menu-item-has-children dropdown"><a href="#">Merk</a>
                 <ul class="sub-menu">
                   <li class="menu-item"><a href="contact-us.html">Abus</a></li>
                   <li class="menu-item"><a href="contact-us.html">Avelio</a></li>
                 </ul>
-              </li>
+              </li> --}}
               <li class="menu-item"><a href="#">Blog</a></li>
             </ul>
           </div>
@@ -112,16 +112,16 @@
         </div>
       </nav>
     </header>
-    <div class="header-services">
+    {{-- <div class="header-services">
       <div class="ps-services owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="7000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
         <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free delivery</strong>: Get free standard delivery on every order with All Bike</p>
         <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free delivery</strong>: Get free standard delivery on every order with All Bike</p>
         <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free service</strong>: Get free standard service on every order with All Bike</p>
       </div>
-    </div>
+    </div> --}}
     <main class="ps-main">
       @yield('content')
-      <div class="ps-subscribe">
+      {{-- <div class="ps-subscribe">
         <div class="ps-container">
           <div class="row">
                 <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
@@ -138,7 +138,7 @@
                 </div>
           </div>
         </div>
-      </div>
+      </div> --}}
       <div class="ps-footer bg--cover" data-background="{{ asset('img/parallax.svg') }}">
         <div class="ps-footer__content">
           <div class="ps-container">
@@ -155,7 +155,7 @@
                       </footer>
                     </aside>
                   </div>
-                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
+                  {{-- <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
                     <aside class="ps-widget--footer ps-widget--link">
                       <header>
                         <h3 class="ps-widget__title">Find Our store</h3>
@@ -169,8 +169,8 @@
                         </ul>
                       </footer>
                     </aside>
-                  </div>
-                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
+                  </div> --}}
+                  {{-- <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
                     <aside class="ps-widget--footer ps-widget--link">
                       <header>
                         <h3 class="ps-widget__title">Get Help</h3>
@@ -185,8 +185,8 @@
                         </ul>
                       </footer>
                     </aside>
-                  </div>
-                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
+                  </div> --}}
+                  {{-- <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
                     <aside class="ps-widget--footer ps-widget--link">
                       <header>
                         <h3 class="ps-widget__title">Products</h3>
@@ -200,7 +200,7 @@
                         </ul>
                       </footer>
                     </aside>
-                  </div>
+                  </div> --}}
             </div>
           </div>
         </div>
@@ -208,16 +208,16 @@
           <div class="ps-container">
             <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                    <p>&copy; <a href="#">SKYTHEMES</a>, Inc. All rights Resevered. Design by <a href="#"> Alena Studio</a></p>
+                    <p>&copy; <a href="#">Allbike</a>, Inc. All rights Reserved. Didesain oleh<a href="#"> Kelompok Laravel</a></p>
                   </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                  {{-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                     <ul class="ps-social">
                       <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                       <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                       <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                       <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                     </ul>
-                  </div>
+                  </div> --}}
             </div>
           </div>
         </div>

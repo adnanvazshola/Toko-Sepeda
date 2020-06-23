@@ -25,8 +25,8 @@ Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
 	Route::resource('kategori', 'kategoriController')->except(['create', 'show']);
 	Route::resource('merk', 'merkController')->except(['create', 'show']);
 	Route::resource('produk', 'produkController')->except(['show']);
-	Route::get('/produk/massal', 'ProdukController@uploadProdukMassal')->name('produk.massal');
-	Route::post('/produk/bulk', 'ProdukController@produkUpload')->name('produk.saveMassal');
+	Route::get('/produk/massal', 'produkController@uploadProdukMassal')->name('produk.massal');
+	Route::post('/produk/bulk', 'produkController@produkUpload')->name('produk.saveMassal');
 	Route::resource('berita', 'beritaController')->except(['show']);
 });
 
@@ -35,13 +35,13 @@ Route::group(['prefix' => 'member', 'namespace' => 'ecomm'], function() {
 });
 
 Route::group(['prefix' => 'member', 'namespace' => 'ecomm'], function() {
-	Route::get('verifikasi/{token}', 'FrontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
+	Route::get('verifikasi/{token}', 'frontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
 	Route::post('login', 'loginController@loginForm')->name('pelanggan.login');
 	Route::post('login', 'loginController@login')->name('pelanggan.postLogin');
 });
 */
 Route::group(['prefix' => 'member'], function() {
-    Route::get('verifikasi/{token}', 'FrontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
+    Route::get('verifikasi/{token}', 'frontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
 	Route::get('login', 'loginController@loginForm')->name('pelanggan.login');
 	Route::post('login', 'loginController@login')->name('pelanggan.postLogin');
 	Route::group(['middleware' => 'pelanggan'], function() {
@@ -53,9 +53,9 @@ Route::group(['prefix' => 'member'], function() {
 
 Route::get('/', 'frontController@index')->name('front.index');
 Route::get('/produk', 'frontController@produk')->name('front.produk');
-Route::get('/kategori/{slug}', 'FrontController@kategoriProduk')->name('front.kategori');
-Route::get('/merk/{slug}', 'FrontController@merkProduk')->name('front.merk');
-Route::get('/produk/{slug}', 'FrontController@detailProduk')->name('front.detailProduk');
+Route::get('/kategori/{slug}', 'frontController@kategoriProduk')->name('front.kategori');
+Route::get('/merk/{slug}', 'frontController@merkProduk')->name('front.merk');
+Route::get('/produk/{slug}', 'frontController@detailProduk')->name('front.detailProduk');
 Route::post('/cart', 'CartController@addToCart')->name('front.cart');
 Route::get('/cart', 'CartController@listCart')->name('front.list_cart');
 Route::post('/cart/update', 'CartController@updateCart')->name('front.update_cart');

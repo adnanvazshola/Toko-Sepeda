@@ -86,26 +86,24 @@
                                 <div class="form-group">
                                     <label>Ukuran :</label>
                                     <div class="input-group">
-                                        <div class="btn-group" data-toggle="buttons">
-                                            <label class="btn btn-primary form-check-label ml-2 active">
-                                                <input type="checkbox" name="ukuran[]" class="form-check-input" autocomplete="off" value="All Size" style="display: none;"> All Size
-                                            </label>
-                                            <label class="btn btn-primary form-check-label ml-2">
-                                                <input type="checkbox" name="ukuran[]" class="form-check-input" autocomplete="off" value="XS" style="display: none;"> XS
-                                            </label>
-                                            <label class="btn btn-primary form-check-label ml-2">
-                                                <input type="checkbox" name="ukuran[]" class="form-check-input" autocomplete="off" value="S" style="display: none;"> S
-                                            </label>
-                                            <label class="btn btn-primary form-check-label ml-2">
-                                                <input type="checkbox" name="ukuran[]" class="form-check-input" autocomplete="off" value="M" style="display: none;"> M
-                                            </label>
-                                            <label class="btn btn-primary form-check-label ml-2">
-                                                <input type="checkbox" name="ukuran[]" class="form-check-input" autocomplete="off" value="L" style="display: none;"> L
-                                            </label>
-                                            <label class="btn btn-primary form-check-label ml-2">
-                                                <input type="checkbox" name="ukuran[]" class="form-check-input" autocomplete="off" value="XL" style="display: none;"> XL
-                                            </label>
-                                        </div>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="ukuran[]" class="ml-2" value="All Size">All Size
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="ukuran[]" class="ml-2" value="XS"> XS
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="ukuran[]" class="ml-2" value="S"> S
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="ukuran[]" class="ml-2" value="M"> M
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="ukuran[]" class="ml-2" value="L"> L
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="ukuran[]" class="ml-2" value="XL"> XL
+                                        </label>
                                     </div>
                                     <p class="text-danger">{{ $errors->first('ukuran') }}</p>
                                 </div>

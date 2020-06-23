@@ -8,14 +8,14 @@
       <div class="ps-products-wrap pt-80 pb-80">
         <div class="ps-products" data-mh="product-listing">
           <div class="ps-product-action">
-            <div class="ps-product__filter">
+            {{-- <div class="ps-product__filter">
               <select class="ps-select selectpicker">
                 <option value="2">Terbaru</option>
                 <option value="3">Nama</option>
                 <option value="4">Harga (Rendah to Tinggi)</option>
                 <option value="5">Harga (Tinggi to Rendah)</option>
               </select>
-            </div>
+            </div> --}}
             <div class="ps-pagination">
               <ul class="pagination">
                 {{ $produk->links() }}
@@ -116,7 +116,7 @@
                 </table>
               </div>
             </aside>
-            <aside class="ps-widget--sidebar">
+            {{-- <aside class="ps-widget--sidebar">
               <div class="ps-widget__header">
                 <h3>Warna</h3>
               </div>
@@ -137,7 +137,7 @@
                   <li><a href="#"></a></li>
                 </ul>
               </div>
-            </aside>
+            </aside> --}}
           </div>
         </div>
       </div>
