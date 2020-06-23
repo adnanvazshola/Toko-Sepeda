@@ -23,32 +23,31 @@ class loginController extends Controller
 
 	    $auth = $request->only('email', 'password');
 	    $auth['status'] = 1;
-	  
+
 	    if (auth()->guard('pelanggan')->attempt($auth)) {
 	        return redirect()->intended(route('pelanggan.dashboard'));
 	    }
-	    
+
 	    return redirect()->back()->with(['error' => 'Email / Password Salah']);
 	}
 
 	public function dashboard()
 	{
-		/*
 		$orders = Order::selectRaw('
-			COALESCE(sum(CASE WHEN status = 0 THEN subtotal END), 0) as Ditunda, 
-        	COALESCE(count(CASE WHEN status = 3 THEN subtotal END), 0) as Dikirim,
-        	COALESCE(count(CASE WHEN status = 4 THEN subtotal END), 0) as Selesai')
+			COALESCE(sum(CASE WHEN status = 0 THEN subtotal END), 0) as ditunda,
+        	COALESCE(count(CASE WHEN status = 3 THEN subtotal END), 0) as dikirim,
+        	COALESCE(count(CASE WHEN status = 4 THEN subtotal END), 0) as selesaiOrder')
         	->where('pelanggan_id', auth()->guard('pelanggan')->user()->id)->get();
 
     	return view('ecomm.dashboard', compact('orders'));
-    	*/
-    	return view('ecomm.dashboard');
+
+    	// return view('ecomm.dashboard');
 	}
 
 	public function logout()
 	{
     	auth()->guard('pelanggan')->logout();
-    
+
     	return redirect(route('pelanggan.login'));
 	}
 }

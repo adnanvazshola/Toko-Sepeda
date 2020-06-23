@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 */
- 
+
 Auth::routes();
 
 Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
@@ -46,7 +46,11 @@ Route::group(['prefix' => 'member'], function() {
 	Route::post('login', 'loginController@login')->name('pelanggan.postLogin');
 	Route::group(['middleware' => 'pelanggan'], function() {
 	    Route::get('dashboard', 'loginController@dashboard')->name('pelanggan.dashboard');
-	    Route::get('logout', 'loginController@logout')->name('pelanggan.logout');
+        Route::get('logout', 'loginController@logout')->name('pelanggan.logout');
+        Route::get('orders', 'OrderController@index')->name('pelanggan.orders');
+        Route::get('order/{invoice}', 'OrderController@view')->name('pelanggan.view_order');
+        Route::get('pembayaran', 'OrderController@pembayaranForm')->name('pelanggan.pembayaranForm');
+        Route::post('pembayaran', 'OrderController@storePembayaran')->name('pelanggan.simpanPembayaran');
 	});
 });
 
