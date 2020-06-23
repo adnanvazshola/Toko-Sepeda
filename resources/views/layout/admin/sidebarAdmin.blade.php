@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
+    <a href="/administrator/home" class="brand-link">
         <img src="{{ asset('img/AdminLTELogo.png') }}" class="brand-image">
         <span class="brand-text font-weight-bold">ALL BIKE</span>
     </a>
@@ -17,25 +17,25 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item has-treeview">
                     <a href="{{ route('home') }}" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-home"></i>
                         <p>Beranda</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('kategori.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-list"></i>
                         <p>Kategori</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('merk.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>Merk Mitra</p>
+                        <i class="nav-icon far fa-copyright"></i>
+                        <p>Merk</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('produk.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-shopping-bag"></i>
                         <p>Produk</p>
                     </a>
                 </li>
@@ -43,7 +43,7 @@
                 <li class="nav-header">EXAMPLES</li>
                 <li class="nav-item">
                     <a href="{{ route('berita.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-newspaper"></i>
                         <p>Berita</p>
                     </a>
                 </li>
