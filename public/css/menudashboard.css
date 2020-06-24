@@ -1,0 +1,65 @@
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+.kotak {
+  background-color: rgb(255, 255, 255);
+  color: rgb(58, 58, 58);
+  margin: 20px;
+  padding: 20px;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+.coupon {
+    border: 5px dotted #bbb; /* Dotted border */
+    width: 80%;
+    border-radius: 15px; /* Rounded border */
+    margin: 0 auto; /* Center the coupon */
+    max-width: 600px;
+}
+
+.containerrr {
+    padding: 2px 16px;
+    background-color: #f1f1f1;
+}
+
+.promo {
+    background: #ccc;
+    padding: 3px;
+}
+
+.expire {
+    color: red;
+}
+
+#Home {background-color: #dadada;}
+#News {background-color: #dadada ;}
+#Contact {background-color: #dadada ;}
+#About {background-color: #dadada ;}
