@@ -66,3 +66,5 @@ Route::post('/cart/update', 'CartController@updateCart')->name('front.update_car
 Route::get('/checkout', 'CartController@checkout')->name('front.checkout');
 Route::post('/checkout', 'CartController@processCheckout')->name('front.store_checkout');
 Route::get('/checkout/{invoice}', 'CartController@checkoutFinish')->name('front.finish_checkout');
+Route::get('/blog', 'frontController@blog')->name('front.blog');
+Route::get('/blog/{slug}', 'frontController@detailBlog')->name('front.detailBlog');

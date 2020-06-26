@@ -80,24 +80,7 @@
             <ul class="main-menu menu">
               <li class="menu-item"><a href="{{ route('front.index') }}">Home</a></li>
               <li class="menu-item"><a href="{{ route('front.produk') }}">Produk</a></li>
-              {{-- <li class="menu-item menu-item-has-children dropdown"><a href="#">Kategori</a>
-                <ul class="sub-menu">
-                  <li class="menu-item menu-item-has-children dropdown"><a href="blog-grid.html">Sepeda</a>
-                    <ul class="sub-menu">
-                      <li class="menu-item"><a href="blog-grid.html">Roadbike</a></li>
-                      <li class="menu-item"><a href="blog-grid-2.html">Mountain Bike</a></li>
-                    </ul>
-                  </li>
-                  <li class="menu-item"><a href="blog-list.html">Jersey</a></li>
-                </ul>
-              </li> --}}
-              {{-- <li class="menu-item menu-item-has-children dropdown"><a href="#">Merk</a>
-                <ul class="sub-menu">
-                  <li class="menu-item"><a href="contact-us.html">Abus</a></li>
-                  <li class="menu-item"><a href="contact-us.html">Avelio</a></li>
-                </ul>
-              </li> --}}
-              <li class="menu-item"><a href="#">Blog</a></li>
+              <li class="menu-item"><a href="{{ route('front.blog') }}">Blog</a></li>
             </ul>
           </div>
           <div class="navigation__column right">
