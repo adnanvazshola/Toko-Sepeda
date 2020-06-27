@@ -1,3 +1,11 @@
+<style>
+.menu-sidebar-area {
+    color: auto;
+    font-size: 17px;
+    line-height: 1.8;
+}
+</style>
+
 <div class="card">
     <div class="card-body">
         <h3> <br></h3>
