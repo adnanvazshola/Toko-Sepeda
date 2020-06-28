@@ -65,4 +65,20 @@ class frontController extends Controller
     
         return redirect(route('pelanggan.login'))->with(['error' => 'Invalid Verifikasi Token']);
     }
+
+    public function blog()
+    {
+        $blog        = Berita::with('user')->orderBy('created_at', 'DESC')->paginate(5);
+    
+        return view('ecomm.blog', compact('blog'));
+    }
+
+    public function detailBlog($slug)
+    {
+        $blog = Berita::with(['user'])->where('slug', $slug)->first();
+        //$blok = Berita::with(['user'])->where('slug' != $slug)->paginate(5);
+        $blok        = Berita::with('user')->orderBy('created_at', 'DESC')->paginate(5);
+
+        return view('ecomm.detailBlog', compact('blog','blok'));
+    }
 }
