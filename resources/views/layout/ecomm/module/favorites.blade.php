@@ -6,15 +6,7 @@
             </div>
             <h1><b>Daftar Favorites</h1><br/>
             <div class="col-md-9">
-                <div class="column">
-                    <div class="col-md-4">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h3>Anda belum menambahkan Favorites</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
