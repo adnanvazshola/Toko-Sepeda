@@ -14,6 +14,7 @@ use App\DetailOrder;
 use DB;
 use App\Mail\PelangganRegisterMail;
 use Mail;
+use Illuminate\Support\Facades\Http;
 
 class CartController extends Controller
 {

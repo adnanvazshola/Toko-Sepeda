@@ -40,7 +40,7 @@
                     </a>
                 </li>
                 <!------------------------------------------------------------------------------------------>
-                <li class="nav-header">EXAMPLES</li>
+                <li class="nav-header">LAINNYA</li>
                 <li class="nav-item">
                     <a href="{{ route('berita.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-newspaper"></i>
@@ -48,9 +48,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('member') }}" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
-                        <p>Gallery</p>
+                        <p>Member</p>
                     </a>
                 </li>
                 <li class="nav-item has-treeview">

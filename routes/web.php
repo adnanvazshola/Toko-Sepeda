@@ -28,6 +28,7 @@ Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
 	Route::get('/produk/massal', 'produkController@uploadProdukMassal')->name('produk.massal');
 	Route::post('/produk/bulk', 'produkController@produkUpload')->name('produk.saveMassal');
 	Route::resource('berita', 'beritaController')->except(['show']);
+	Route::get('/member', 'memberController@index')->name('member');
 });
 
 /*
