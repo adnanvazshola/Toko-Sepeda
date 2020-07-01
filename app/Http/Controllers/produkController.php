@@ -44,7 +44,7 @@ class produkController extends Controller
 	        'stok'			=> 'required|integer',
 	        'desc' 			=> 'required',
 	        'harga' 		=> 'required|integer',
-	        'berat' 		=> 'required|integer',
+	        'weight' 		=> 'required|integer',
 	        'foto' 			=> 'required|image|mimes:png,jpeg,jpg'
 	    ]);
 	    if ($request->hasFile('foto')) {
@@ -62,7 +62,7 @@ class produkController extends Controller
 	            'stok'			=> $request->stok,
 	            'desc' 			=> $request->desc,
 	            'harga' 		=> $request->harga,
-	            'berat' 		=> $request->berat,
+	            'weight' 		=> $request->weight,
 	            'foto' 			=> $filename,
 	            'status' 		=> $request->status
 	        ]);
@@ -124,7 +124,7 @@ class produkController extends Controller
 	        'stok'			=> 'required|integer',
 	        'desc' 			=> 'required',
 	        'harga' 		=> 'required|integer',
-	        'berat' 		=> 'required|integer',
+	        'weight' 		=> 'required|integer',
 	        'foto' 			=> 'nullable|image|mimes:png,jpeg,jpg'
 	    ]);
     $produk = Produk::find($id);
@@ -146,7 +146,7 @@ class produkController extends Controller
         'stok'			=> $request->stok,
         'desc' 			=> $request->desc,
         'harga' 		=> $request->harga,
-        'berat' 		=> $request->berat,
+        'weight' 		=> $request->weight,
         'foto' 			=> $filename,
         'status' 		=> $request->status
     ]);

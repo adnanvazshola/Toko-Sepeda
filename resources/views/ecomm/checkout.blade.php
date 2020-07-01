@@ -85,7 +85,7 @@
 
                   <div class="form-group form-group--inline">
                       <label for="">Kurir</label>
-                      <input type="text" name="berat" id="berat" value="{{ $berat }}">
+                      <input type="text" name="weight" id="weight" value="{{ $berat }}">
                       <select class="form-control" name="courier" id="courier" required>
                           <option value="">Pilih Kurir</option>
                       </select>
@@ -206,7 +206,7 @@
             $.ajax({
                 url: "{{ url('/api/cost') }}",
                 type: "POST",
-                data: { destination: $(this).val(), weight: $('#berat').val() },
+                data: { destination: $(this).val(), weight: $('#weight').val() },
                 success: function(html){
                     //BERSIHKAN AREA SELECT BOX
                     $('#courier').empty()

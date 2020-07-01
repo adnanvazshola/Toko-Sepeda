@@ -131,12 +131,12 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="number" class="form-control" name="berat" value="{{ old('berat') }}" required>
+                                        <input type="number" class="form-control" name="weight" value="{{ old('weight') }}" required>
                                         <div class="input-group-append">
                                             <span class="input-group-text">Gram</span>
                                         </div>
                                     </div>
-                                    <p class="text-danger">{{ $errors->first('berat') }}</p>
+                                    <p class="text-danger">{{ $errors->first('weight') }}</p>
                                 </div>
                             </div>
                         </div>

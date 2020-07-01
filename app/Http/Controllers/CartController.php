@@ -47,7 +47,7 @@ class CartController extends Controller
 	            'produk_nama' 	=> $produk->nama,
 	            'produk_harga' 	=> $produk->harga,
 	            'produk_foto' 	=> $produk->foto,
-	            'berat' 		=> $produk->berat
+	            'weight' 		=> $produk->weight
 	        ];
 	    }
 	    $cookie = cookie('ab-carts', json_encode($carts), 2880);
@@ -87,7 +87,7 @@ class CartController extends Controller
 	        return $q['qty'] * $q['produk_harga'];
 	    });
 	    $berat = collect($carts)->sum(function($q) {
-        	return $q['qty'] * $q['berat'];
+        	return $q['qty'] * $q['weight'];
     	});
 
 	    return view('ecomm.checkout', compact('provinsi', 'carts', 'subtotal', 'berat'));
@@ -153,7 +153,6 @@ class CartController extends Controller
 	            'pembayaran' 			=> $request->pembayaran,
 	            'cost' 					=> $shipping[2],
     			'shipping' 				=> $shipping[0] . '-' . $shipping[1],
-    			'ref' 					=> $affiliate != '' && $explodeAffiliate[0] != auth()->guard('pelanggan')->user()->id ? $affiliate:NULL
 	        ]);
 
 	        foreach ($carts as $row) {
@@ -164,7 +163,7 @@ class CartController extends Controller
 	                'harga' 	=> $row['produk_harga'],
 	                'ukuran'	=> $row['ukuran'],
 	                'jumlah' 	=> $row['qty'],
-	                'berat' 	=> $row['berat']
+	                'weight' 	=> $row['weight']
 	            ]);
 	        }
 
@@ -194,7 +193,7 @@ class CartController extends Controller
 	{
 	    $this->validate($request, [
 	        'destination' => 'required',
-	        'berat' => 'required|integer'
+	        'weight' => 'required|integer'
 	    ]);
 
 	    $url = 'https://ruangapi.com/api/v1/shipping';
@@ -206,7 +205,7 @@ class CartController extends Controller
 	        'form_params' => [
 	            'origin' 		=> 22,
 	            'destination' 	=> $request->destination,
-	            'weight' 		=> $request->berat,
+	            'weight' 		=> $request->weight,
 	            'courier' 		=> 'jne,jnt'
 	        ]
 	    ]);

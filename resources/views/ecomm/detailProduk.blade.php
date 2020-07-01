@@ -46,7 +46,7 @@
                 @csrf
                     <div class="ps-product__block ps-product__size">
                       <input type="hidden" name="produk_id" value="{{ $produk->id }}" class="form-control">
-                      <input type="hidden" name="berat" value="{{ $produk->berat }}" class="form-control">
+                      <input type="hidden" name="weight" value="{{ $produk->weight }}" class="form-control">
                       <h4>Pilih Ukuran<a href="#">Size chart</a></h4>
                       <select class="ps-select selectpicker" name="ukuran" required="silahkan pilih ukuran">
                         <option disabled>Select Size</option>

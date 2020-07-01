@@ -122,7 +122,7 @@
           </div>
         </div>
       </div> --}}
-      <div class="ps-footer bg--cover" data-background="{{ asset('img/parallax.svg') }}">
+      <div class="ps-footer bg--cover" data-background="#">
         <div class="ps-footer__content">
           <div class="ps-container">
             <div class="row">
