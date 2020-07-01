@@ -13,9 +13,9 @@ class RenameBeratColumn extends Migration
      */
     public function up()
     {
-        // Schema::table('produks', function(Blueprint $table) {
-        //     $table->renameColumn('berat', 'weight');
-        // });
+        Schema::table('produks', function(Blueprint $table) {
+            $table->renameColumn('berat', 'weight');
+        });
     }
 
     /**
