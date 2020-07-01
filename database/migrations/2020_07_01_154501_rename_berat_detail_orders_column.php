@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RenameBeratColumn extends Migration
+class RenameBeratDetailOrdersColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class RenameBeratColumn extends Migration
      */
     public function up()
     {
-        // Schema::table('produks', function(Blueprint $table) {
-        //     $table->renameColumn('berat', 'weight');
-        // });
+        Schema::table('detail_orders', function(Blueprint $table) {
+            $table->renameColumn('berat', 'weight');
+        });
     }
 
     /**
@@ -25,7 +25,7 @@ class RenameBeratColumn extends Migration
      */
     public function down()
     {
-        Schema::table('produks', function(Blueprint $table) {
+        Schema::table('detail_orders', function(Blueprint $table) {
             $table->renameColumn('weight', 'berat');
         });
     }
