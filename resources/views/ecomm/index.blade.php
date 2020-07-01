@@ -40,11 +40,11 @@
           <div class="ps-section__header mb-50">
             <div class="row">
                   <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
-                    <h3 class="ps-section__title" data-mask="FEATURES">- Features Products</h3>
+                    <h3 class="ps-section__title" data-mask="FEATURES">- Produk Kami</h3>
                   </div>
-                  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
+                  {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                     <div class="ps-owl-actions"><a class="ps-prev" href="#"><i class="ps-icon-arrow-right"></i>Prev</a><a class="ps-next" href="#">Next<i class="ps-icon-arrow-left"></i></a></div>
-                  </div>
+                  </div> --}}
             </div>
           </div>
           <div class="ps-section__content">
@@ -53,8 +53,8 @@
               <div class="ps-shoes--carousel">
                 <div class="ps-shoe">
                   <div class="ps-shoe__thumbnail">
-                    <div class="ps-badge"><span>New</span></div>
-                    <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
+                    {{-- <div class="ps-badge"><span>New</span></div>
+                    <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a> --}}
                     <img src="{{ asset('storage/produk/' . $row->foto) }}" alt="" height="200px">
                     <a class="ps-shoe__overlay" href="{{ url('/produk/' . $row->slug) }}"></a>
                   </div>
@@ -137,7 +137,7 @@
       <div class="ps-section ps-home-blog pt-80 pb-80">
         <div class="ps-container">
           <div class="ps-section__header mb-50">
-            <h2 class="ps-section__title" data-mask="News">- Our Story</h2>
+            <h2 class="ps-section__title" data-mask="News">- Blog</h2>
             <div class="ps-section__action"><a class="ps-morelink text-uppercase" href="#">View all post<i class="fa fa-long-arrow-right"></i></a></div>
           </div>
           <div class="ps-section__content">

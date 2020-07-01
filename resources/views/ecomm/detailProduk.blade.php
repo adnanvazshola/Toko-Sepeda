@@ -27,7 +27,7 @@
                 </div>
               </div>
               <div class="ps-product__info">
-                <div class="ps-product__rating">
+                {{-- <div class="ps-product__rating">
                   <select class="ps-rating">
                     <option value="1">1</option>
                     <option value="1">2</option>
@@ -35,7 +35,7 @@
                     <option value="1">4</option>
                     <option value="2">5</option>
                   </select><a href="#">(Read all 8 reviews)</a>
-                </div>
+                </div> --}}
                 <h1>{{ $produk->nama }} - {{ $produk->warna->nama }}</h1>
                 <p class="ps-product__category">
                   <a href="#">{{ $produk->kategori->nama }}</a>,
@@ -47,7 +47,7 @@
                     <div class="ps-product__block ps-product__size">
                       <input type="hidden" name="produk_id" value="{{ $produk->id }}" class="form-control">
                       <input type="hidden" name="weight" value="{{ $produk->weight }}" class="form-control">
-                      <h4>Pilih Ukuran<a href="#">Size chart</a></h4>
+                      <h4>Pilih Ukuran</h4>
                       <select class="ps-select selectpicker" name="ukuran" required="silahkan pilih ukuran">
                         <option disabled>Select Size</option>
                         <option value="XS">XS</option>
@@ -76,7 +76,7 @@
                     </div>
               </div>
               <div class="clearfix"></div>
-              <div class="ps-product__content mt-50">
+              <div class="ps-product__content mt-50 block">
                 <ul class="tab-list" role="tablist">
                   <li class="active">
                     <a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">Deskripsi</a>

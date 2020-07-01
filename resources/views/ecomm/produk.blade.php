@@ -27,9 +27,9 @@
             <div class="ps-product__column">
               <div class="ps-shoe mb-30">
                 <div class="ps-shoe__thumbnail">
-                  <a class="ps-shoe__favorite" href="#">
+                  {{-- <a class="ps-shoe__favorite" href="#">
                     <i class="ps-icon-heart"></i>
-                  </a>
+                  </a> --}}
                   <img src="{{ asset('storage/produk/' . $row->foto) }}" alt="" style="height: 200px;">
                   <a class="ps-shoe__overlay" href="#"></a>
                 </div>
