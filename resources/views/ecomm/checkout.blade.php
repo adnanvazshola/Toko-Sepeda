@@ -15,26 +15,49 @@
                   @if (session('error'))
                     <div class="alert alert-danger">{{ session('error') }}</div>
                   @endif
-                  <div class="form-group form-group--inline">
-                    <label>Nama</label>
-                    <input type="text" class="form-control" id="first" name="pelanggan_nama" required>
-                    <p class="text-danger">{{ $errors->first('pelanggan_nama') }}</p>
-                  </div>
-                  <div class="form-group form-group--inline">
-                    <label>Telephone</label>
-                    <input type="text" class="form-control" id="number" name="pelanggan_telephone" required>
-                    <p class="text-danger">{{ $errors->first('pelanggan_telephone') }}</p>
-                  </div>
-                  <div class="form-group form-group--inline">
-                    <label>Email</label>
-                    <input type="text" class="form-control" id="email" name="email" required>
-                    <p class="text-danger">{{ $errors->first('email') }}</p>
-                  </div>
-                  <div class="form-group form-group--inline">
-                    <label>Alamat<span>*</span></label>
-                    <input type="text" class="form-control" id="add1" name="pelanggan_alamat" required>
-                    <p class="text-danger">{{ $errors->first('pelanggan_alamat') }}</p>
-                  </div>
+                  @if (auth()->guard('pelanggan')->check())
+                    <div class="form-group form-group--inline">
+                      <label>Nama</label>
+                      <input type="text" class="form-control" id="first" name="pelanggan_nama" value="{{ auth()->guard('pelanggan')->user()->nama }}" required>
+                      <p class="text-danger">{{ $errors->first('pelanggan_nama') }}</p>
+                    </div>
+                    <div class="form-group form-group--inline">
+                      <label>Telephone</label>
+                      <input type="text" class="form-control" id="number" name="pelanggan_telephone" value="{{ auth()->guard('pelanggan')->user()->telephone }}" required>
+                      <p class="text-danger">{{ $errors->first('pelanggan_telephone') }}</p>
+                    </div>
+                    <div class="form-group form-group--inline">
+                      <label>Email</label>
+                      <input type="email" class="form-control" id="email" name="email" value="{{ auth()->guard('pelanggan')->user()->email }}" required {{ auth()->guard('pelanggan')->check() ? 'readonly':'' }}>
+                      <p class="text-danger">{{ $errors->first('email') }}</p>
+                    </div>
+                    <div class="form-group form-group--inline">
+                      <label>Alamat</label>
+                      <input type="text" class="form-control" id="add1" name="pelanggan_alamat" value="{{ auth()->guard('pelanggan')->user()->alamat }}" required>
+                      <p class="text-danger">{{ $errors->first('pelanggan_alamat') }}</p>
+                    </div>
+                  @else
+                    <div class="form-group form-group--inline">
+                      <label>Nama</label>
+                      <input type="text" class="form-control" id="first" name="pelanggan_nama" required>
+                      <p class="text-danger">{{ $errors->first('pelanggan_nama') }}</p>
+                    </div>
+                    <div class="form-group form-group--inline">
+                      <label>Telephone</label>
+                      <input type="text" class="form-control" id="number" name="pelanggan_telephone" required>
+                      <p class="text-danger">{{ $errors->first('pelanggan_telephone') }}</p>
+                    </div>
+                    <div class="form-group form-group--inline">
+                      <label>Email</label>
+                      <input type="email" class="form-control" id="email" name="email" required>
+                      <p class="text-danger">{{ $errors->first('email') }}</p>
+                    </div>
+                    <div class="form-group form-group--inline">
+                      <label>Alamat</label>
+                      <input type="text" class="form-control" id="add1" name="pelanggan_alamat" required>
+                      <p class="text-danger">{{ $errors->first('pelanggan_alamat') }}</p>
+                    </div>
+                  @endif
                   <div class="form-group form-group--inline">
                     <label for="">Propinsi</label>
                     <select class="form-control" name="provinsi_id" id="provinsi_id" required>
@@ -60,10 +83,13 @@
                     <p class="text-danger">{{ $errors->first('kecamatan_id') }}</p>
                   </div>
 
-                  <h3 class="mt-40"> Addition information</h3>
-                  <div class="form-group form-group--inline textarea">
-                    <label>Order Notes</label>
-                    <textarea class="form-control" rows="5" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                  <div class="form-group form-group--inline">
+                      <label for="">Kurir</label>
+                      <input type="text" name="berat" id="berat" value="{{ $berat }}">
+                      <select class="form-control" name="courier" id="courier" required>
+                          <option value="">Pilih Kurir</option>
+                      </select>
+                      <p class="text-danger">{{ $errors->first('courier') }}</p>
                   </div>
                 </div>
               </div>
@@ -118,7 +144,9 @@
                       <div class="ps-radio">
                         <p>
                           <h5 style="color: white;">
-                            Total : Rp {{ number_format($subtotal) }}
+                            subtotal    <span>: Rp. {{ number_format($subtotal) }}</span><br>
+                            Pengiriman  <span id="ongkir">: Rp. 0</span><br>
+                            Total       <span id="total">Rp. {{ number_format($subtotal) }}</span>
                           </h5>
                         </p>
                       </div>
@@ -127,10 +155,6 @@
                       <button class="ps-btn ps-btn--fullwidth">Place Order<i class="ps-icon-next"></i></button>
                     </div>
                   </footer>
-                </div>
-                <div class="ps-shipping">
-                  <h3>FREE SHIPPING</h3>
-                  <p>YOUR ORDER QUALIFIES FOR FREE SHIPPING.<br> <a href="#" class="font-weight-bold"> Sign Up </a> for free shipping on every order, every time.</p>
                 </div>
               </div>
         </div>
@@ -169,6 +193,46 @@
                     })
                 }
             });
+        })
+
+
+        //JIKA KECAMATAN DIPILIH
+        $('#kecamatan_id').on('change', function() {
+            //MEMBUAT EFEK LOADING SELAMA PROSES REQUEST BERLANGSUNG
+            $('#courier').empty()
+            $('#courier').append('<option value="">Loading...</option>')
+          
+            //MENGIRIM PERMINTAAN KE SERVER UNTUK MENGAMBIL DATA API
+            $.ajax({
+                url: "{{ url('/api/cost') }}",
+                type: "POST",
+                data: { destination: $(this).val(), weight: $('#berat').val() },
+                success: function(html){
+                    //BERSIHKAN AREA SELECT BOX
+                    $('#courier').empty()
+                    $('#courier').append('<option value="">Pilih Kurir</option>')
+                  
+                    //LOOPING DATA ONGKOS KIRIM
+                    $.each(html.data.results, function(key, item) {
+                        let courier = item.courier + ' - ' + item.service + ' (Rp '+ item.cost +')'
+                        let value = item.courier + '-' + item.service + '-'+ item.cost
+                        //DAN MASUKKAN KE DALAM OPTION SELECT BOX
+                        $('#courier').append('<option value="'+value+'">' + courier + '</option>')
+                    })
+                }
+            });
+        })
+
+        //JIKA KURIR DIPILIH
+        $('#courier').on('change', function() {
+            //UPDATE INFORMASI BIAYA PENGIRIMAN
+            let split = $(this).val().split('-')
+            $('#ongkir').text('Rp ' + split[2])
+
+            //UPDATE INFORMASI TOTAL (SUBTOTAL + ONGKIR)
+            let subtotal = "{{ $subtotal }}"
+            let total = parseInt(subtotal) + parseInt(split['2'])
+            $('#total').text('Rp' + total)
         })
     </script>
 @endsection

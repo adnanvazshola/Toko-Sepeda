@@ -46,6 +46,7 @@
                 @csrf
                     <div class="ps-product__block ps-product__size">
                       <input type="hidden" name="produk_id" value="{{ $produk->id }}" class="form-control">
+                      <input type="hidden" name="berat" value="{{ $produk->berat }}" class="form-control">
                       <h4>Pilih Ukuran<a href="#">Size chart</a></h4>
                       <select class="ps-select selectpicker" name="ukuran" required="silahkan pilih ukuran">
                         <option disabled>Select Size</option>
@@ -65,6 +66,9 @@
                               Add to cart
                               <i class="ps-icon-next"></i>
                           </button>
+                          @if (session('success'))
+                              <div class="alert alert-success mt-2">{{ session('success') }}</div>
+                          @endif
                       </div>
                       <div class="ps-product__actions">
                           <a class="mr-10" href="#"><i class="ps-icon-heart"></i></a>

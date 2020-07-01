@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $guarded = [];
+    protected $appends = ['status_label', 'ref_status_label', 'commission', 'total'];
 
     public function kecamatan()
     {
         return $this->belongsTo(Kecamatan::class);
     }
 
-    protected $appends = ['status_label'];
 
     public function getStatusLabelAttribute()
     {
@@ -36,7 +36,12 @@ class Order extends Model
     }
 
     public function pembayaran()
-{
-    return $this->hasOne(Pembayaran::class);
-}
+    {
+        return $this->hasOne(Pembayaran::class);
+    }
+
+    public function getTotalAttribute()
+    {
+        return $this->subtotal + $this->cost;
+    }
 }

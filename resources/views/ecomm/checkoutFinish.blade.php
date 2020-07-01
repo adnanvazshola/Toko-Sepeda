@@ -58,11 +58,15 @@
 						<ul class="list">
 							<li>
 								<a href="#">
-                  				<span>Total</span> : Rp {{ number_format($order->subtotal) }}</a>
+                  				<span>Subotal</span> : Rp {{ number_format($order->subtotal) }}</a>
 							</li>
 							<li>
 								<a href="#">
-                  				<span>Biaya pengiriman</span> : Rp. 0</a>
+                  				<span>Biaya pengiriman</span> : Rp {{ number_format($order->cost) }}</a>
+							</li>
+							<li>
+								<a href="#">
+                  				<span>Total</span> : Rp {{ number_format($order->total) }}</a>
 							</li>
 							<li>
 								<a href="#">

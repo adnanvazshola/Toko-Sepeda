@@ -30,6 +30,7 @@
                         <td>
                             {{ $row['produk_nama'] }}<br>
                             <small>Ukuran   : {{ $row['ukuran'] }}</small><br>
+                            <small>Berat   : {{ $row['berat'] }} gram</small><br>
                             <small>Catatan  : {{ $row['catatan'] }}</small>
                         </td>
                         <td>Rp. {{ number_format($row['produk_harga']) }}</td>

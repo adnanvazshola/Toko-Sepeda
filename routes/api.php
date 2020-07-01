@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('kota', 'CartController@getKota');
 Route::get('kecamatan', 'CartController@getKecamatan');
+Route::post('cost', 'CartController@getCourier');

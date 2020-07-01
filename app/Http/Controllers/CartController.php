@@ -14,7 +14,7 @@ use App\DetailOrder;
 use DB;
 use App\Mail\PelangganRegisterMail;
 use Mail;
-use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class CartController extends Controller
 {
@@ -46,12 +46,13 @@ class CartController extends Controller
 	            'produk_id' 	=> $produk->id,
 	            'produk_nama' 	=> $produk->nama,
 	            'produk_harga' 	=> $produk->harga,
-	            'produk_foto' 	=> $produk->foto
+	            'produk_foto' 	=> $produk->foto,
+	            'berat' 		=> $produk->berat
 	        ];
 	    }
 	    $cookie = cookie('ab-carts', json_encode($carts), 2880);
 	    
-	    return redirect()->back()->cookie($cookie)->with(['success' => 'barang berhasil di tambah']);
+	    return redirect()->back()->with(['success' => 'barang berhasil di tambah'])->cookie($cookie);
 	}
 
 	public function listCart()
@@ -85,8 +86,11 @@ class CartController extends Controller
 	    $subtotal = collect($carts)->sum(function($q) {
 	        return $q['qty'] * $q['produk_harga'];
 	    });
+	    $berat = collect($carts)->sum(function($q) {
+        	return $q['qty'] * $q['berat'];
+    	});
 
-	    return view('ecomm.checkout', compact('provinsi', 'carts', 'subtotal'));
+	    return view('ecomm.checkout', compact('provinsi', 'carts', 'subtotal', 'berat'));
 	}
 
 	public function getKota()
@@ -111,7 +115,8 @@ class CartController extends Controller
 	        'pelanggan_alamat' 		=> 'required|string',
 	        'provinsi_id' 			=> 'required|exists:provinsis,id',
 	        'kota_id' 				=> 'required|exists:kotas,id',
-	        'kecamatan_id'			=> 'required|exists:kecamatans,id'
+	        'kecamatan_id'			=> 'required|exists:kecamatans,id',
+	        'courier' 				=> 'required'
 	    ]);
 	    DB::beginTransaction();
 	    try {
@@ -136,6 +141,7 @@ class CartController extends Controller
 	            'status' 		=> false
 	        ]);
 
+	        $shipping = explode('-', $request->courier);
 	        $order = Order::create([
 	            'invoice' 				=> 'INV-' . time(),
 	            'pelanggan_id' 			=> $pelanggan->id,
@@ -144,7 +150,10 @@ class CartController extends Controller
 	            'pelanggan_alamat' 		=> $request->pelanggan_alamat,
 	            'kecamatan_id' 			=> $request->kecamatan_id,
 	            'subtotal' 				=> $subtotal,
-	            'pembayaran' 			=> $request->pembayaran
+	            'pembayaran' 			=> $request->pembayaran,
+	            'cost' 					=> $shipping[2],
+    			'shipping' 				=> $shipping[0] . '-' . $shipping[1],
+    			'ref' 					=> $affiliate != '' && $explodeAffiliate[0] != auth()->guard('pelanggan')->user()->id ? $affiliate:NULL
 	        ]);
 
 	        foreach ($carts as $row) {
@@ -155,7 +164,7 @@ class CartController extends Controller
 	                'harga' 	=> $row['produk_harga'],
 	                'ukuran'	=> $row['ukuran'],
 	                'jumlah' 	=> $row['qty'],
-	                'berat' 	=> $produk->berat
+	                'berat' 	=> $row['berat']
 	            ]);
 	        }
 
@@ -177,5 +186,32 @@ class CartController extends Controller
     	$order = Order::with(['kecamatan.kota'])->where('invoice', $invoice)->first();
     	
     	return view('ecomm.checkoutFinish', compact('order'));
+	}
+
+	//API
+
+	public function getCourier(Request $request)
+	{
+	    $this->validate($request, [
+	        'destination' => 'required',
+	        'berat' => 'required|integer'
+	    ]);
+
+	    $url = 'https://ruangapi.com/api/v1/shipping';
+	    $client = new Client();
+	    $response = $client->request('POST', $url, [
+	        'headers' => [
+	            'Authorization' => 'iBrTqdLDJlg0HLZ4aqws2h8oKaEgIRZlJI8wTCXZ'
+	        ],
+	        'form_params' => [
+	            'origin' 		=> 22,
+	            'destination' 	=> $request->destination,
+	            'weight' 		=> $request->berat,
+	            'courier' 		=> 'jne,jnt'
+	        ]
+	    ]);
+
+	    $body = json_decode($response->getBody(), true);
+	    return $body;
 	}
 }
