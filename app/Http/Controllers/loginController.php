@@ -67,6 +67,7 @@ class loginController extends Controller
 	    ]);
     $pelanggan = Pelanggan::find($id);
 
+        
     $pelanggan->simpan([
 	        'nama' 		    => $request->pelanggan_nama,
             'telephone'     => $request->pelanggan_telephone,
