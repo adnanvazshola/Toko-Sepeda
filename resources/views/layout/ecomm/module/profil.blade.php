@@ -14,35 +14,38 @@
                 </div>
                 <h1><b>Profil</h1><br><br>
                     <div class="col-md-9">
-                        <form action="" method="POST">
+                        <form action="{{ route('pelanggan.simpan', auth->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
                             <div class="content">
                                 <table class="table-form" border="0" width="100%" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td width="20%"><label for="nama">Nama Lengkap</label></td>
-                                        <td colspan="3"><input name="nama" id="nama" type="text" class="form"></td>
-                                    </tr>
-                                    <tr>
+                                    <div class="form-group form-group--inline">
+                                        <label>Nama</label>
+                                        <input type="text" class="form-control" id="first" name="pelanggan_nama" value="{{ auth()->guard('pelanggan')->user()->nama }}" required>
+                                        <p class="text-danger">{{ $errors->first('pelanggan_nama') }}</p>
+                                      </div>
+                                      <div class="form-group form-group--inline">
+                                        <label>Telephone</label>
+                                        <input type="text" class="form-control" id="number" name="pelanggan_telephone" value="{{ auth()->guard('pelanggan')->user()->telephone }}" required>
+                                        <p class="text-danger">{{ $errors->first('pelanggan_telephone') }}</p>
+                                      </div>
+                                      <div class="form-group form-group--inline">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="{{ auth()->guard('pelanggan')->user()->email }}" required {{ auth()->guard('pelanggan')->check() ? 'readonly':'' }}>
+                                        <p class="text-danger">{{ $errors->first('email') }}</p>
+                                      </div>
+                                      <div class="form-group form-group--inline">
+                                        <label>Alamat</label>
+                                        <input type="text" class="form-control" id="add1" name="pelanggan_alamat" value="{{ auth()->guard('pelanggan')->user()->alamat }}" required>
+                                        <p class="text-danger">{{ $errors->first('pelanggan_alamat') }}</p>
+                                      </div>
                                         <td><label for="tempat_lahir">Tempat Lahir</label></td>
                                         <td><input name="tempat_lahir" id="tempat_lahir" type="text" class="form"></td>
-                                        <td><label>Tanggal Lahir</label></td>
-                                        <td>
-                                            <select name="tgl_lahir" class="form">
-                                                <option>xx</option>
-                                                <option>xx</option>
-                                                <option>xx</option>
-                                            </select>
-                                            <select name="bln_lahir" class="form">
-                                                <option>xx</option>
-                                                <option>xx</option>
-                                                <option>xx</option>
-                                            </select>
-                                            <select name="thn_lahir" class="form">
-                                                <option>xxxx</option>
-                                                <option>xxxx</option>
-                                                <option>xxxx</option>
-                                            </select>
-                                        </td>
-                                    </tr>
+                                        <div class="form-group form-group--inline">
+                                            <label>Tanggal Lahir</label>
+                                            <input type="date" class="form-control" id="tanggalLahir" name="tgl_lahir" value="{{ auth()->guard('pelanggan')->user()->tanggalLahir }}" required {{ auth()->guard('pelanggan')->check() ? 'readonly':'' }}>
+                                            <p class="text-danger">{{ $errors->first('tanggalLahir') }}</p>
+                                          </div>
                                     <tr>
                                         <td valign="top"><label for="alamat">Alamat</label></td>
                                         <td valign="top" colspan="2">
@@ -62,22 +65,6 @@
                                                 <input type="number" name="kode_pos" id="kode_pos" class="form">
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="hp">No. HP</label></td>
-                                        <td colspan="3"><input name="hp" id="hp" type="number" class="form"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="email">Email</label></td>
-                                        <td colspan="3"><input name="email" id="email" type="text" class="form"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="tinggi_badan">Tinggi Badan</label></td>
-                                        <td colspan="3"><input name="tinggi_badan" id="tinggi_badan" type="number" class="form"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="berat_badan">Berat Badan</label></td>
-                                        <td colspan="3"><input name="berat_badan" id="berat_badan" type="number" class="form"></td>
                                     </tr>
                                 </table>
                             </div>
