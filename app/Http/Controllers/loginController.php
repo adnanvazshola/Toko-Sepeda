@@ -52,4 +52,30 @@ class loginController extends Controller
 
     	return redirect(route('pelanggan.login'));
 	}
+    
+    public function simpan(Request $request, $id)
+	{
+
+    $this->validate($request, [
+	        'pelanggan_nama' 		=> 'required|string|max:100',
+	        'pelanggan_telephone'		=> 'required|number',
+	        'email'			    => 'required',
+            'alamat' 			=> 'required|string|max:100',
+            'tanggalLahir'      => 'required',
+            'jenisKelamin'      => 'required',
+            'kecamatan_id'      => 'required',
+	    ]);
+    $pelanggan = Pelanggan::find($id);
+
+    $pelanggan->simpan([
+	        'nama' 		    => $request->pelanggan_nama,
+            'telephone'     => $request->pelanggan_telephone,
+            'email'         => $request->email,
+	        'alamat'		=> $request->pelanggan_alamat,
+            'tanggalLahir'	=> $request->tgl_lahir,
+            'jenisKelamin'  => $request->jenis_kelamin,
+	        'kecamatan_id' 	=> $request->kecamatan,
+		]);
+		return redirect(route('pelanggan.dashboard'));
+	}
 }
