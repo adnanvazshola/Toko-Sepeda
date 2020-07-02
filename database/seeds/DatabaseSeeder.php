@@ -1,5 +1,6 @@
 <?php
 
+use App\Pelanggan;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,5 +17,6 @@ class DatabaseSeeder extends Seeder
     	$this->call(ProvinsiTableSeeder::class);
         $this->call(WarnaTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(PelangganSeeder::class);
     }
 }
