@@ -6,7 +6,7 @@
 @section('content')
   <div class="ps-checkout pt-80 pb-80">
     <div class="ps-container">
-          <form class="ps-checkout__form" action="#" method="post" novalidate="novalidate">
+          <form class="ps-checkout__form" action="{{ route('front.store_checkout') }}" method="post" novalidate="novalidate">
           @csrf
             <div class="row">
               <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
@@ -15,7 +15,7 @@
                   @if (session('error'))
                     <div class="alert alert-danger">{{ session('error') }}</div>
                   @endif
-                  @if (auth()->guard('pelanggan')->check())
+                  @if (auth()->guard('pelanggan')->check())                  
                     <div class="form-group form-group--inline">
                       <label>Nama</label>
                       <input type="text" class="form-control" id="first" name="pelanggan_nama" value="{{ auth()->guard('pelanggan')->user()->nama }}" required>
@@ -85,7 +85,7 @@
 
                   <div class="form-group form-group--inline">
                       <label for="">Kurir</label>
-                      <input type="text" name="weight" id="weight" value="{{ $berat }}">
+                      <input type="hidden" name="weight" id="weight" value="{{ $berat }}">
                       <select class="form-control" name="courier" id="courier" required>
                           <option value="">Pilih Kurir</option>
                       </select>

@@ -43,6 +43,10 @@
 							</li>
 							<li>
 								<a href="#">
+                  				<span>Kecamatan</span> : {{ $order->kecamatan->nama }}</a>
+							</li>
+							<li>
+								<a href="#">
                   				<span>Kota</span> : {{ $order->kecamatan->kota->nama }}</a>
 							</li>
 							<li>
@@ -58,7 +62,7 @@
 						<ul class="list">
 							<li>
 								<a href="#">
-                  				<span>Subotal</span> : Rp {{ number_format($order->subtotal) }}</a>
+                  				<span>Subtotal</span> : Rp {{ number_format($order->subtotal) }}</a>
 							</li>
 							<li>
 								<a href="#">

@@ -14,6 +14,7 @@ use App\DetailOrder;
 use DB;
 use App\Mail\PelangganRegisterMail;
 use Mail;
+use Cookie;
 use GuzzleHttp\Client;
 
 class CartController extends Controller
@@ -121,25 +122,28 @@ class CartController extends Controller
 	    DB::beginTransaction();
 	    try {
 	        $pelanggan = Pelanggan::where('email', $request->email)->first();
-	        if (!auth()->check() && $pelanggan) {
+	        if (!auth()->guard('pelanggan')->check() && $pelanggan) {
 	            return redirect()->back()->with(['error' => 'Silahkan Login Terlebih Dahulu']);
 	        }
+
 	        $carts = $this->getCarts();
 	        $subtotal = collect($carts)->sum(function($q) {
 	            return $q['qty'] * $q['produk_harga'];
 	        });
 
-	        $password = Str::random(8);
-	        $pelanggan = Pelanggan::create([
-	            'nama' 			=> $request->pelanggan_nama,
-	            'email' 		=> $request->email,
-	            'password'		=> $password,
-	            'telephone' 	=> $request->pelanggan_telephone,
-	            'alamat' 		=> $request->pelanggan_alamat,
-	            'kecamatan_id' 	=> $request->kecamatan_id,
-	            'activate_token'=> Str::random(30),
-	            'status' 		=> false
-	        ]);
+	        if (!auth()->guard('pelanggan')->check()) {
+		        $password = Str::random(8);
+		        $pelanggan = Pelanggan::create([
+		            'nama' 			=> $request->pelanggan_nama,
+		            'email' 		=> $request->email,
+		            'password'		=> $password,
+		            'telephone' 	=> $request->pelanggan_telephone,
+		            'alamat' 		=> $request->pelanggan_alamat,
+		            'kecamatan_id' 	=> $request->kecamatan_id,
+		            'activate_token'=> Str::random(30),
+		            'status' 		=> false
+		        ]);
+		    }
 
 	        $shipping = explode('-', $request->courier);
 	        $order = Order::create([
@@ -171,7 +175,9 @@ class CartController extends Controller
 
 	        $carts = [];
 	        $cookie = cookie('ab-carts', json_encode($carts), 2880);
-	        Mail::to($request->email)->send(new PelangganRegisterMail($pelanggan, $password));
+	        if (!auth()->guard('pelanggan')->check()) {
+		        Mail::to($request->email)->send(new PelangganRegisterMail($pelanggan, $password));
+		    }
 
 	        return redirect(route('front.finish_checkout', $order->invoice))->cookie($cookie);
 	    } catch (\Exception $e) {
