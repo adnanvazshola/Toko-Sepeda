@@ -37,9 +37,11 @@ class loginController extends Controller
 			COALESCE(sum(CASE WHEN status = 0 THEN subtotal END), 0) as ditunda,
         	COALESCE(count(CASE WHEN status = 3 THEN subtotal END), 0) as dikirim,
         	COALESCE(count(CASE WHEN status = 4 THEN subtotal END), 0) as selesaiOrder')
-        	->where('pelanggan_id', auth()->guard('pelanggan')->user()->id)->get();
+        		->where('pelanggan_id', auth()->guard('pelanggan')->user()->id)->get();
+        $order = Order::where('pelanggan_id', auth()->guard('pelanggan')->user()->id)->orderBy('created_at', 'DESC')->paginate(10);
 
-    	return view('ecomm.dashboard', compact('orders'));
+
+    	return view('ecomm.dashboard', compact('orders','order'));
 
     	// return view('ecomm.dashboard');
 	}

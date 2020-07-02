@@ -48,10 +48,10 @@ Route::group(['prefix' => 'member'], function() {
 	Route::group(['middleware' => 'pelanggan'], function() {
 	    Route::get('dashboard', 'loginController@dashboard')->name('pelanggan.dashboard');
         Route::get('logout', 'loginController@logout')->name('pelanggan.logout');
-        Route::get('orders', 'OrderController@index')->name('pelanggan.orders');
-        Route::get('order/{invoice}', 'OrderController@view')->name('pelanggan.view_order');
-        Route::get('pembayaran', 'OrderController@pembayaranForm')->name('pelanggan.pembayaranForm');
-        Route::post('pembayaran', 'OrderController@storePembayaran')->name('pelanggan.simpanPembayaran');
+        Route::get('orders', 'Ecomm/OrderController@index')->name('pelanggan.orders');
+        Route::get('order/{invoice}', 'Ecomm/OrderController@view')->name('pelanggan.view_order');
+        Route::get('pembayaran', 'Ecomm/OrderController@pembayaranForm')->name('pelanggan.pembayaranForm');
+        Route::post('pembayaran', 'Ecomm/OrderController@storePembayaran')->name('pelanggan.simpanPembayaran');
 	});
 });
 
