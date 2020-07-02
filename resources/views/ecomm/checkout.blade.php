@@ -1,6 +1,6 @@
 @extends('layout.ecomm')
 @section('title')
-    <title>Cart</title>
+    <title>Checkout</title>
 @endsection
 
 @section('content')
