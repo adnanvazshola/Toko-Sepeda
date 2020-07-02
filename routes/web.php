@@ -52,6 +52,7 @@ Route::group(['prefix' => 'member'], function() {
         Route::get('order/{invoice}', 'Ecomm/OrderController@view')->name('pelanggan.view_order');
         Route::get('pembayaran', 'Ecomm/OrderController@pembayaranForm')->name('pelanggan.pembayaranForm');
         Route::post('pembayaran', 'Ecomm/OrderController@storePembayaran')->name('pelanggan.simpanPembayaran');
+        Route::post('simpan', 'loginController@updatepelanggan')->name('pelanggan.simpan');
 	});
 });
 
