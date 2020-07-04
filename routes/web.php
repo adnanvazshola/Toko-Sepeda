@@ -52,7 +52,7 @@ Route::get('/', 'frontController@index')->name('front.index');
 Route::get('/produk', 'frontController@produk')->name('front.produk');
 Route::get('/kategori/{slug}', 'frontController@kategoriProduk')->name('front.kategori');
 Route::get('/merk/{slug}', 'frontController@merkProduk')->name('front.merk');
-Route::get('/produk/{slug}', 'frontController@detailProduk')->name('front.detailProduk');
+Route::get('/produk/{produk}', 'frontController@detailProduk')->name('front.detailProduk');
 Route::post('/cart', 'CartController@addToCart')->name('front.cart');
 Route::get('/cart', 'CartController@listCart')->name('front.list_cart');
 Route::post('/cart/update', 'CartController@updateCart')->name('front.update_cart');
@@ -61,3 +61,5 @@ Route::post('/checkout', 'CartController@processCheckout')->name('front.store_ch
 Route::get('/checkout/{invoice}', 'CartController@checkoutFinish')->name('front.finish_checkout');
 Route::get('/blog', 'frontController@blog')->name('front.blog');
 Route::get('/blog/{slug}', 'frontController@detailBlog')->name('front.detailBlog');
+
+Route::resource('favorites', 'FavoriteController');

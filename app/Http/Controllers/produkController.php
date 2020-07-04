@@ -66,7 +66,7 @@ class produkController extends Controller
 	            'foto' 			=> $filename,
 	            'status' 		=> $request->status
 	        ]);
-	        
+
 	        return redirect(route('produk.index'))->with(['success' => 'Produk Baru Ditambahkan']);
 	    }
 	}
@@ -109,7 +109,7 @@ class produkController extends Controller
     	$merk 		= Merk::orderBy('nama', 'ASC')->get();
     	$kategoris 	= Kategori::orderBy('nama', 'ASC')->get();
     	$warna 		= Warna::orderBy('nama', 'ASC')->get();
-    	
+
     	return view('produk.edit', compact('produk', 'kategoris', 'merk', 'warna'));
 	}
 
@@ -129,7 +129,7 @@ class produkController extends Controller
 	    ]);
     $produk = Produk::find($id);
     $filename = $produk->foto;
-  
+
     if ($request->hasFile('foto')) {
         $file = $request->file('foto');
         $filename = time() . Str::slug($request->nama) . '.' . $file->getClientOriginalExtension();
@@ -151,5 +151,43 @@ class produkController extends Controller
         'status' 		=> $request->status
     ]);
     	return redirect(route('produk.index'))->with(['success' => 'Data Produk Telah Di Update']);
+    }
+
+    public function show($slug)
+	{
+		$product = Product::active()->where('slug', $slug)->first();
+
+		if (!$product) {
+			return redirect('products');
+		}
+
+		if ($product->configurable()) {
+			$this->data['colors'] = ProductAttributeValue::getAttributeOptions($product, 'color')->pluck('text_value', 'text_value');
+			$this->data['sizes'] = ProductAttributeValue::getAttributeOptions($product, 'size')->pluck('text_value', 'text_value');
+		}
+
+		$this->data['product'] = $product;
+
+		return $this->loadTheme('products.show', $this->data);
+	}
+
+	/**
+	 * Quick view product.
+	 *
+	 * @param string $slug product slug
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function quickView($slug)
+	{
+		$product = Product::active()->where('slug', $slug)->firstOrFail();
+		if ($product->configurable()) {
+			$this->data['colors'] = ProductAttributeValue::getAttributeOptions($product, 'color')->pluck('text_value', 'text_value');
+			$this->data['sizes'] = ProductAttributeValue::getAttributeOptions($product, 'size')->pluck('text_value', 'text_value');
+		}
+
+		$this->data['product'] = $product;
+
+		return $this->loadTheme('products.quick_view', $this->data);
 	}
 }

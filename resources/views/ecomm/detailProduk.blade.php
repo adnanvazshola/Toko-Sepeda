@@ -71,7 +71,7 @@
                           @endif
                       </div>
                       <div class="ps-product__actions">
-                          <a class="mr-10" href="#"><i class="ps-icon-heart"></i></a>
+                          <a class="mr-10" title="Favorite"  product-slug="{{ $produk->slug }}" href="{{ url('favorites') }}"><i class="ps-icon-heart"></i></a>
                           <a href="#"><i class="ps-icon-share"></i></a></div>
                     </div>
               </div>
@@ -107,4 +107,38 @@
           </div>
         </div>
       </div>
+@endsection
+
+@section('js')
+    <script>
+        (function($) {
+            $('.add-to-fav').on('click', function (e) {
+                e.preventDefault();
+
+                var product_slug = $(this).attr('product-slug');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/favorites',
+                    data:{
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        product_slug: product_slug
+                    },
+                    success: function (response) {
+                        alert(response);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        if (xhr.status == 401) {
+                            $('#loginModal').modal();
+                        }
+
+                        if (xhr.status == 422) {
+                            alert(xhr.responseText);
+                        }
+                    }
+                });
+            });
+
+        })(jQuery);
+    </script>
 @endsection

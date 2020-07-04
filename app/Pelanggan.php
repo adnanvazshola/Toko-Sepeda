@@ -19,5 +19,10 @@ class Pelanggan extends Authenticatable
 	public function kecamatan()
 	{
     	return $this->belongsTo(Kecamatan::class);
+    }
+
+    public function favorites()
+	{
+		return $this->hasMany('App\Models\Favorite');
 	}
 }
