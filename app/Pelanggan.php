@@ -15,4 +15,9 @@ class Pelanggan extends Authenticatable
 	{
     	$this->attributes['password'] = bcrypt($value);
 	}
+
+	public function kecamatan()
+	{
+    	return $this->belongsTo(Kecamatan::class);
+	}
 }

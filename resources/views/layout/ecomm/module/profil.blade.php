@@ -1,87 +1,45 @@
-<style>
-    text {
-        color: auto;
-        font-size: 17px;
-        line-height: 1.8;
-    }
-</style>
-
-<section class="login_box_area p_120">
-    <div class="container">
-        <div class="column">
-                <div class="col-md-3">
-                    @include('layout.ecomm.module.sidebar')
-                </div>
-                <h1><b>Profil</h1><br><br>
-                    <div class="col-md-9">
-                        <form action="{{ route('pelanggan.simpan', auth->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="content">
-                                <table class="table-form" border="0" width="100%" cellpadding="0" cellspacing="0">
-                                    <div class="form-group form-group--inline">
-                                        <label>Nama</label>
-                                        <input type="text" class="form-control" id="first" name="pelanggan_nama" value="{{ auth()->guard('pelanggan')->user()->nama }}" required>
-                                        <p class="text-danger">{{ $errors->first('pelanggan_nama') }}</p>
-                                      </div>
-                                      <div class="form-group form-group--inline">
-                                        <label>Telephone</label>
-                                        <input type="text" class="form-control" id="number" name="pelanggan_telephone" value="{{ auth()->guard('pelanggan')->user()->telephone }}" required>
-                                        <p class="text-danger">{{ $errors->first('pelanggan_telephone') }}</p>
-                                      </div>
-                                      <div class="form-group form-group--inline">
-                                        <label>Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" value="{{ auth()->guard('pelanggan')->user()->email }}" required {{ auth()->guard('pelanggan')->check() ? 'readonly':'' }}>
-                                        <p class="text-danger">{{ $errors->first('email') }}</p>
-                                      </div>
-                                      <div class="form-group form-group--inline">
-                                        <label>Alamat</label>
-                                        <input type="text" class="form-control" id="add1" name="pelanggan_alamat" value="{{ auth()->guard('pelanggan')->user()->alamat }}" required>
-                                        <p class="text-danger">{{ $errors->first('pelanggan_alamat') }}</p>
-                                      </div>
-                                        <td><label for="tempat_lahir">Tempat Lahir</label></td>
-                                        <td><input name="tempat_lahir" id="tempat_lahir" type="text" class="form"></td>
-                                        <div class="form-group form-group--inline">
-                                            <label>Tanggal Lahir</label>
-                                            <input type="date" class="form-control" id="tanggalLahir" name="tgl_lahir" value="{{ auth()->guard('pelanggan')->user()->tanggalLahir }}" required {{ auth()->guard('pelanggan')->check() ? 'readonly':'' }}>
-                                            <p class="text-danger">{{ $errors->first('tanggalLahir') }}</p>
-                                          </div>
-                                    <tr>
-                                        <td valign="top"><label for="alamat">Alamat</label></td>
-                                        <td valign="top" colspan="2">
-                                            <textarea name="alamat" id="alamat" class="form" cols="50" rows="8"></textarea>
-                                        </td>
-                                        <td valign="top">
-                                            <div>
-                                                <label for="kota">Kota</label>
-                                                <input type="text" name="kota" id="kota" class="form">
-                                            </div>
-                                            <div>
-                                                <label for="negara">Negara</label>
-                                                <input type="text" name="negara" id="negara" class="form">
-                                            </div>
-                                            <div>
-                                                <label for="kode_pos">Kode Pos</label>
-                                                <input type="number" name="kode_pos" id="kode_pos" class="form">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <input type="submit" class="btn" value="Simpan">
-                            </form>
-                    </div>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h2 class="text-center">Data Diri</h2><br><br>
             </div>
         </div>
-
-    </div>
-
-
-
-
-</section>
-
-
-
-
-
+        <div class="card-body">
+            <div class="row pl-4 pr-4 pt-4">
+                <div class="col-sm-4">
+                    <img src="{{ asset('storage/member/' . $member->foto) }}" alt="{{ $member->nama }}" style="width:250px; height: 250px; background-color: black;">
+                </div>
+                <div class="col-sm-8">
+                    <table class="table table-hover table-borderless">
+                        <tr>
+                            <td width="20%"><h5>Nama            </td>
+                            <td> : </td>
+                            <td>{{ $member->nama }}</h5></td>
+                        </tr>
+                        <tr>
+                            <td><h5>Email           </td>
+                            <td> : </td>
+                            <td>{{ $member->email }}</h5></td>
+                        </tr>
+                        <tr>
+                            <td><h5>Telephone       </td>
+                            <td> : </td>
+                            <td>{{ $member->telephone }}</h5></td>
+                        </tr>
+                        <tr>
+                            <td><h5>Alamat          </td>
+                            <td> : </td>
+                            <td>{{ $member->alamat }}, {{ $member->kecamatan->nama }}, {{ $member->kecamatan->kota->nama }}<br>
+                                    {{ $member->kecamatan->kota->provinsi->nama }}, Indonesia ( {{ $member->kecamatan->kota->kodePos }} )</h5></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <br><br>
+            <a href="{{ route('pelanggan.updateData', $member->id) }}" class="btn btn-danger align-content-center">Edit Profil</a>
+        </div>
+    </div>  
+</div>

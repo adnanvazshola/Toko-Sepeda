@@ -1,7 +1,5 @@
 <?php
-
-namespace App\Http\Controllers\Ecomm;
-
+namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Pembayaran;
@@ -11,17 +9,13 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
-    {
-        $orders = Order::where('pelanggan_id', auth()->guard('pelanggan')->user()->id)->orderBy('created_at', 'DESC')->paginate(10);
-        return view('ecomm.orders.index', compact('orders'));
-    }
-
     public function view($invoice)
     {
         $order = Order::with(['kecamatan.kota.provinsi', 'details', 'details.produk', 'pembayaran'])
             ->where('invoice', $invoice)->first();
-        return view('ecomm.orders.view', compact('order'));
+
+            //return $order;
+        return view('ecomm.viewOrder', compact('order'));
     }
 
     public function pembayaranForm()

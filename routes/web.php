@@ -31,16 +31,6 @@ Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
 	Route::get('/member', 'memberController@index')->name('member');
 });
 
-/*
-Route::group(['prefix' => 'member', 'namespace' => 'ecomm'], function() {
-});
-
-Route::group(['prefix' => 'member', 'namespace' => 'ecomm'], function() {
-	Route::get('verifikasi/{token}', 'frontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
-	Route::post('login', 'loginController@loginForm')->name('pelanggan.login');
-	Route::post('login', 'loginController@login')->name('pelanggan.postLogin');
-});
-*/
 Route::group(['prefix' => 'member'], function() {
     Route::get('verifikasi/{token}', 'frontController@verifikasiPelanggan')->name('pelanggan.verifikasi');
 	Route::get('login', 'loginController@loginForm')->name('pelanggan.login');
@@ -48,11 +38,12 @@ Route::group(['prefix' => 'member'], function() {
 	Route::group(['middleware' => 'pelanggan'], function() {
 	    Route::get('dashboard', 'loginController@dashboard')->name('pelanggan.dashboard');
         Route::get('logout', 'loginController@logout')->name('pelanggan.logout');
-        Route::get('orders', 'Ecomm/OrderController@index')->name('pelanggan.orders');
-        Route::get('order/{invoice}', 'Ecomm/OrderController@view')->name('pelanggan.view_order');
-        Route::get('pembayaran', 'Ecomm/OrderController@pembayaranForm')->name('pelanggan.pembayaranForm');
-        Route::post('pembayaran', 'Ecomm/OrderController@storePembayaran')->name('pelanggan.simpanPembayaran');
-        Route::post('simpan', 'loginController@updatepelanggan')->name('pelanggan.simpan');
+        Route::get('orders', 'orderController@index')->name('pelanggan.orders');
+        Route::get('order/{invoice}', 'orderController@view')->name('pelanggan.view_order');
+        Route::get('pembayaran', 'orderController@pembayaranForm')->name('pelanggan.pembayaranForm');
+        Route::post('pembayaran', 'orderController@storePembayaran')->name('pelanggan.simpanPembayaran');
+        Route::get('/formUpdateData', 'loginController@updateData')->name('pelanggan.updateData');
+        Route::post('/updateData', 'loginController@simpan')->name('pelanggan.update');
 	});
 });
 
