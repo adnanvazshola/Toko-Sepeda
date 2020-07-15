@@ -35,7 +35,7 @@ public function getStatusLabelAttribute()
         return $this->hasMany(DetailOrder::class);
     }
 
-    public function pembayaran()
+    public function pembayarans()
     {
         return $this->hasOne(Pembayaran::class);
     }

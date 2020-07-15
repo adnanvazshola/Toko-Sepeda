@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function view($invoice)
     {
-        $order = Order::with(['kecamatan.kota.provinsi', 'details', 'details.produk', 'pembayaran'])
+        $order = Order::with(['kecamatan.kota.provinsi', 'details', 'details.produk', 'pembayarans'])
             ->where('invoice', $invoice)->first();
 
             //return $order;
@@ -23,7 +23,7 @@ class OrderController extends Controller
         return view('ecomm.pembayaran');
     }
 
-    public function tokoPembayaran(Request $request)
+    public function storePembayaran(Request $request)
     {
 
     $this->validate($request, [
@@ -62,7 +62,7 @@ class OrderController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with(['success' => 'Pesanan Dikonfirmasi']);
+            return view('ecomm.dashboard');
         }
 
         return redirect()->back()->with(['error' => 'Error, Upload Bukti Transfer']);

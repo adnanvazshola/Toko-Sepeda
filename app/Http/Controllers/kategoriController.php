@@ -9,16 +9,8 @@ use DataTables;
 class kategoriController extends Controller
 {
     public function index(Request $request)
-/*    {
-        $kategori = Kategori::with(['parent'])->orderBy('nama', 'DESC')->paginate(10);
-        $parent = Kategori::getParent()->orderBy('nama', 'ASC')->get();
-      
-        return view('kategori.index', compact('kategori', 'parent'));
-    } */
     {
         if ($request->ajax()) {
-
-            //$kategori = Kategori::with(['parent'])->orderBy('nama', 'DESC')->get();
             $data = Kategori::with(['parent'])->orderBy('nama')->orderBy("nama")->get();
             return DataTables::of($data)
                     ->addIndexColumn()

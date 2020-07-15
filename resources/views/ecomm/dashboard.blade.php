@@ -20,17 +20,11 @@
         <button class="tablink" onclick="openPage('About', this, 'orange')">Voucher Saya</button>
 
         <div id="Home" class="tabcontent">
-            <h1><b>Akun Saya</h1><br/>
-                <div class="kotak">
-                    @include('layout.ecomm.module.profil')
-                </div>
+            @include('layout.ecomm.module.profil')
         </div>
 
         <div id="News" class="tabcontent">
-            <h1><b>Pesanan Saya</h1><br/>
-                <div class="kotak">
-                    @include('layout.ecomm.module.pesanan')
-                </div>
+            @include('layout.ecomm.module.pesanan')
         </div>
 
         <div id="Contact" class="tabcontent">

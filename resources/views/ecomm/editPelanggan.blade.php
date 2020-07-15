@@ -4,19 +4,19 @@
 @endsection
 
 @section('content')
-    <main class="ps-main">
+    <main class="ps-main pt-3">
       <div class="container">
-        <form action="{{ route('pelanggan.update') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('pelanggan.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
             <div class="form-group">
               <center>
                 <img src="{{ asset('storage/member/' . $member->foto) }}" alt="{{ $member->nama }}" class="rounded-circle" style="width:250px; height: 250px; border-radius: 50%; background-color: black;" >
                 <input type="file" name="foto">
-                <small><strong>Biarkan kosong jika tidak ingin mengganti gambar</strong></small>
                 <p class="text-danger">{{ $errors->first('foto') }}</p>
               </center>
             </div>
+            <input type="hidden" name="id" value="{{ $member->id }}">
             <div class="form-group form-group--inline">
                 <label>Nama</label>
                 <input type="text" class="form-control" name="nama" value="{{ $member->nama }}" required>
@@ -63,32 +63,29 @@
             </div>
             <div class="form-group form-group--inline">
                 <label>Password</label>
-                <input type="password" class="form-control" name="password" placeholder="*********" required>
+                <input type="password" class="form-control" name="password" placeholder="Biarkan kosong jika tidak ingin mengganti password" value="">
                 <p class="text-danger">{{ $errors->first('password') }}</p>
-                <p>Biarkan kosong jika tidak ingin mengganti password</p>
+                <small><b>biarkan password kosong jika tidak ingin mengganti</b></small>
             </div>
-            <button class="btn btn-primary btn-sm">Simpan</button>
-        </form>
+            <button class="btn btn-primary btn-lg mb-4">Simpan</button>
+        </form><br><br>
       </div>
     </main>
 @endsection
 
 @section('js')
     <script>
-        $(document).ready(function(){\
+        $(document).ready(function(){
             loadKota($('#provinsi_id').val(), 'bySelect').then(() => {
                 loadKecamatan($('#kota_id').val(), 'bySelect');
             })
         })
-
         $('#provinsi_id').on('change', function() {
             loadKota($(this).val(), '');
         })
-
         $('#kota_id').on('change', function() {
             loadKecamatan($(this).val(), '')
         })
-
         function loadKota(provinsi_id, type) {
             return new Promise((resolve, reject) => {
                 $.ajax({
@@ -99,21 +96,15 @@
                         $('#kota_id').empty()
                         $('#kota_id').append('<option value="">Pilih Kabupaten/Kota</option>')
                         $.each(html.data, function(key, item) {
-                            
-                            // KITA TAMPUNG VALUE CITY_ID SAAT INI
                             let kota_selected = {{ $member->kecamatan->kota_id }};
-                           //KEMUDIAN DICEK, JIKA CITY_SELECTED SAMA DENGAN ID CITY YANG DOLOOPING MAKA 'SELECTED' AKAN DIAPPEND KE TAG OPTION
                             let selected = type == 'bySelect' && kota_selected == item.id ? 'selected':'';
-                            //KEMUDIAN KITA MASUKKAN VALUE SELECTED DI ATAS KE DALAM TAG OPTION
                             $('#kota_id').append('<option value="'+item.id+'" '+ selected +'>'+item.nama+'</option>')
                             resolve()
                         })
                     }
                 });
-            })
+            });
         }
-
-        //CARA KERJANYA SAMA SAJA DENGAN FUNGSI DI ATAS
         function loadKecamatan(kota_id, type) {
             $.ajax({
                 url: "{{ url('/api/kecamatan') }}",

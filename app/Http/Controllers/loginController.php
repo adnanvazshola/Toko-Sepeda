@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
@@ -76,20 +76,13 @@ class loginController extends Controller
 	        $file = $request->file('foto');
 	        $filename = time() . Str::nama($request->nama) . '.' . $file->getClientOriginalExtension();
 	        $file->storeAs('public/member', $filename);
-
-		    //AMBIL DATA CUSTOMER YANG SEDANG LOGIN
 		    $user = auth()->guard('pelanggan')->user();
-		    //AMBIL DATA YANG DIKIRIM DARI FORM
-		    //TAPI HANYA 4 COLUMN SAJA SESUAI YANG ADA DI BAWAH
-		    $data = $request->only('nama', 'telephone', 'alamat', 'kecamatan_id');
-		    //ADAPUN PASSWORD KITA CEK DULU, JIKA TIDAK KOSONG
+		    $data = $request->only('foto','id','nama', 'telephone', 'alamat', 'kecamatan_id');
 		    if ($request->password != '') {
-		        //MAKA TAMBAHKAN KE DALAM ARRAY
 		        $data['password'] = $request->password;
 		    }
-		    //TERUS UPDATE DATANYA
 	    	$user->update($data);
-	    	//DAN REDIRECT KEMBALI DENGAN MENGIRIMKAN PESAN BERHASIL
+
 	    	return view('ecomm.dashboard')->with(['success' => 'Profil berhasil diperbaharui']);
 		}
 	}
