@@ -44,4 +44,8 @@ public function getStatusLabelAttribute()
     {
         return $this->subtotal + $this->cost;
     }
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class);
+    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldFotoToPelanggansTable extends Migration
+class AddFieldTrackingNumberToOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddFieldFotoToPelanggansTable extends Migration
      */
     public function up()
     {
-        Schema::table('pelanggans', function (Blueprint $table) {
-            $table->string('foto')->after('status')->default('default.jpeg');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->string('tracking_number')->nullable()->after('status');
         });
     }
 
@@ -25,8 +25,8 @@ class AddFieldFotoToPelanggansTable extends Migration
      */
     public function down()
     {
-        Schema::table('pelanggans', function (Blueprint $table) {
-            //
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('tracking_number');
         });
     }
 }

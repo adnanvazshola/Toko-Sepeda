@@ -29,6 +29,13 @@ Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
 	Route::post('/produk/bulk', 'produkController@produkUpload')->name('produk.saveMassal');
 	Route::resource('berita', 'beritaController')->except(['show']);
 	Route::get('/member', 'memberController@index')->name('member');
+	Route::group(['prefix' => 'orders'], function() {
+    	Route::get('/', 'adminOrderController@index')->name('orders.index');
+    	Route::delete('/{id}', 'adminOrderController@destroy')->name('orders.destroy');
+    	Route::get('/{invoice}', 'adminOrderController@view')->name('orders.view');
+    	Route::get('/payment/{invoice}', 'adminOrderController@acceptPayment')->name('orders.approve_payment');
+    	Route::post('/shipping', 'adminOrderController@shippingOrder')->name('orders.shipping');
+	});
 });
 
 Route::group(['prefix' => 'member'], function() {

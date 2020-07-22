@@ -54,9 +54,9 @@
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon far fa-envelope"></i>
-                        <p>Mailbox</p>
+                    <a class="nav-link" href="{{ route('orders.index') }}">
+                        <i class="nav-icon fas fa-archive"></i> 
+                        <p>Pesanan</p>
                     </a>
                 </li>
                 <li class="nav-item">

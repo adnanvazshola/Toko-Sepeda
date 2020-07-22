@@ -198,38 +198,27 @@
 
         //JIKA KECAMATAN DIPILIH
         $('#kecamatan_id').on('change', function() {
-            //MEMBUAT EFEK LOADING SELAMA PROSES REQUEST BERLANGSUNG
             $('#courier').empty()
             $('#courier').append('<option value="">Loading...</option>')
-          
-            //MENGIRIM PERMINTAAN KE SERVER UNTUK MENGAMBIL DATA API
             $.ajax({
                 url: "{{ url('/api/cost') }}",
                 type: "POST",
                 data: { destination: $(this).val(), weight: $('#weight').val() },
                 success: function(html){
-                    //BERSIHKAN AREA SELECT BOX
                     $('#courier').empty()
                     $('#courier').append('<option value="">Pilih Kurir</option>')
-                  
-                    //LOOPING DATA ONGKOS KIRIM
                     $.each(html.data.results, function(key, item) {
                         let courier = item.courier + ' - ' + item.service + ' (Rp '+ item.cost +')'
                         let value = item.courier + '-' + item.service + '-'+ item.cost
-                        //DAN MASUKKAN KE DALAM OPTION SELECT BOX
                         $('#courier').append('<option value="'+value+'">' + courier + '</option>')
                     })
                 }
             });
         })
 
-        //JIKA KURIR DIPILIH
         $('#courier').on('change', function() {
-            //UPDATE INFORMASI BIAYA PENGIRIMAN
             let split = $(this).val().split('-')
             $('#ongkir').text('Rp ' + split[2])
-
-            //UPDATE INFORMASI TOTAL (SUBTOTAL + ONGKIR)
             let subtotal = "{{ $subtotal }}"
             let total = parseInt(subtotal) + parseInt(split['2'])
             $('#total').text('Rp' + total)
